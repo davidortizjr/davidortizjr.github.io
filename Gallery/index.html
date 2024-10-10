@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Best Moments with Her</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
             background-color: black;
@@ -27,12 +28,6 @@
             margin: 20px auto;
         }
 
-        .gallery-item {
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
-            height: auto;
-        }
-
         .gallery-item img {
             width: 100%;
             height: 300px;
@@ -44,6 +39,10 @@
 
         .gallery-item:hover img {
             filter: grayscale(0%);
+        }
+
+        .gallery-item.expanded img {
+            transform: scale(1.1);
         }
 
         .gallery-item .caption {
@@ -60,29 +59,27 @@
             height: auto;
             padding: 20px;
         }
-
-        .expanded img {
-            transform: scale(1.05);
-        }
-
-        .gallery-item.hover img {
-            transform: scale(1.1);
-        }
     </style>
 </head>
 
 <body>
-    <h1>Best Moments with Her</h1>
-    <p>Being with her feels like I'm in a field full of flowers while feeling the cold and calm breeze. 
-        I can tell you that there's a lot of things that I'm uncertain of, my love for her isn't one of them</p>
-    <p>Beautiful moments that are shared together. Every picture tells a story, 
-        and the moments captured here are full of love, joy, and unforgettable moments</p>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <h1>Best Moments with Her</h1>
+                <p>Being with her feels like I'm in a field full of flowers while feeling the cold and calm breeze. I can tell you that there's a lot of things that I'm uncertain of, my love for her isn't one of them.</p>
+                <p>Beautiful moments that are shared together. Every picture tells a story, and the moments captured here are full of love, joy, and unforgettable memories.</p>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
-        <div class="row" id="gallery"></div>
+        <div class="row" id="galleryContainer"></div>
     </div>
 
     <script>
+        // Data arrays for images and captions
         const images = [
             'images/1.jpg', 'images/2.jpg', 'images/3.jpg', 'images/4.jpg', 'images/5.jpg',
             'images/6.jpg', 'images/7.jpg', 'images/8.jpg', 'images/9.jpg', 'images/10.jpg',
@@ -108,45 +105,35 @@
             'I forgot what we were watching kasi I was so focused on watching her.'
         ];
 
-        const gallery = document.getElementById('gallery');
+        const galleryContainer = document.getElementById("galleryContainer");
+        for (let i = 0; i < images.length; i++) {
+            galleryContainer.innerHTML += `
+            <div class="col-xl-3 col-md-4 col-sm-6 col-12 gallery-item">
+                <div class="card mb-4" id="card${i}" onclick="toggleExpand(${i})">
+                    <img src="${images[i]}" class="card-img-top" alt="${captions[i]}">
+                    <div class="caption">
+                        <p>${captions[i]}</p>
+                    </div>
+                </div>
+            </div>`;
+        }
 
-        images.forEach((image, i) => {
-            const col = document.createElement('div');
-            col.classList.add('col-xl-3', 'col-md-4', 'gallery-item', 'mb-3', 'col-sm-6');
+        function toggleExpand(i) {
+            const card = document.getElementById(`card${i}`);
+            const caption = card.querySelector('.caption');
 
-            const img = document.createElement('img');
-            img.src = image;
-            img.alt = captions[i];
-
-            const caption = document.createElement('div');
-            caption.classList.add('caption');
-            caption.innerHTML = captions[i];
-
-            col.appendChild(img);
-            col.appendChild(caption);
-            gallery.appendChild(col);
-
-            col.onmouseover = () => {
-                col.classList.add('hover');
-            };
-
-            col.onmouseleave = () => {
-                col.classList.remove('hover');
-            };
-
-            col.onclick = () => {
-                col.classList.toggle('expanded');
-                if (col.classList.contains('expanded')) {
-                    caption.style.height = caption.scrollHeight + "px";
-                } else {
-                    caption.style.height = "0px";
-                }
-            };
-        });
+            card.classList.toggle('expanded');
+            if (card.classList.contains('expanded')) {
+                caption.style.height = caption.scrollHeight + "px";
+            } else {
+                caption.style.height = "0px";
+            }
+        }
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
+</body>
 </html>
