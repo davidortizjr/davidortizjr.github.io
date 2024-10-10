@@ -13,21 +13,18 @@
             color: white;
             font-family: 'Georgia', serif;
         }
-
         h1 {
             text-align: center;
             font-size: 48px;
             letter-spacing: 2px;
             padding-top: 20px;
         }
-
         p {
             text-align: center;
             font-size: 18px;
             max-width: 800px;
             margin: 20px auto;
         }
-
         .gallery-item img {
             width: 100%;
             height: 300px;
@@ -36,15 +33,12 @@
             filter: grayscale(100%);
             transition: filter 0.3s ease, transform 0.3s ease;
         }
-
         .gallery-item:hover img {
             filter: grayscale(0%);
         }
-
         .gallery-item.expanded img {
             transform: scale(1.1);
         }
-
         .gallery-item .caption {
             overflow: hidden;
             height: 0px;
@@ -54,10 +48,29 @@
             color: white;
             text-align: center;
         }
-
         .gallery-item.expanded .caption {
             height: auto;
             padding: 20px;
+        }
+        .back-btn {
+            border: 2px solid #ff5733;
+            color: #ff5733;
+            background-color: transparent;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .back-btn:hover {
+            background-color: #ff5733;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin: 0;
+            font-weight: 300;
         }
     </style>
 </head>
@@ -129,8 +142,13 @@
                 caption.style.height = "0px";
             }
         }
-    </script>
-
+    </script> 
+    <footer class="footer">
+        <a href="../index.html" target="_blank">
+            <button class="back-btn">GO BACK</button>
+          </a>
+    </footer>
+        
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
