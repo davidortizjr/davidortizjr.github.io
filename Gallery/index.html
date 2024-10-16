@@ -16,7 +16,7 @@
 
         [data-bs-theme="light"] {
             --bs-body-bg: white;
-            --bs-body-color: black;
+            --bs-body-color: white;
         }
 
         body {
@@ -99,9 +99,9 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col">
+            <div class="col" style="background-image: url(images/nav.jpeg); height: 700px; background-size: cover; background-position: bottom;">
                 <h1>Best Moments with Her</h1>
                 <p>Being with her feels like I'm in a field full of flowers while feeling the cold and calm breeze. I
                     can tell you that there's a lot of things that I'm uncertain of, my love for her isn't one of them.
@@ -179,7 +179,7 @@
         function changeMode() {
             var bodyElement = document.getElementById("body");
             colorMode = colorMode === "dark" ? "light" : "dark";
-            bodyElement.setAttribute("data-bs-theme", colorMode);
+            bodyElement.setAttribute("data-bs-theme", colorMode);   
         }
     </script>
 
