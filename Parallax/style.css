@@ -59,6 +59,8 @@ img.img-fluid {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
     flex-basis: 45%;
+    flex: 1 1 55%;
+    max-width: 100%;
 }
 
 .stills-container img:hover {
