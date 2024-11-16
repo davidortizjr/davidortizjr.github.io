@@ -49,12 +49,12 @@ img.img-fluid {
 .stills-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
 }
 
 .stills-container img {
-    max-width: 45%;
+    width: 300px;
     height: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
