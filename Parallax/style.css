@@ -56,7 +56,6 @@ img.img-fluid {
 .stills-container img {
     max-width: 500px;
     height: auto;
-    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
 }
