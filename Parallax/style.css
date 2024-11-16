@@ -54,10 +54,11 @@ img.img-fluid {
 }
 
 .stills-container img {
-    max-width: 40%;
+    max-width: 45%;
     height: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
+    flex-basis: 45%;
 }
 
 .stills-container img:hover {
