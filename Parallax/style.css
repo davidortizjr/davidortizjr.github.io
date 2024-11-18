@@ -49,18 +49,16 @@ img.img-fluid {
 .stills-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
     justify-content: center;
 }
 
 .stills-container img {
-    width: 100%;
+    max-width: 500px;
     height: auto;
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
-    flex-basis: 100%;
-    flex: 1 1 100%;
-    max-width: 100%;
 }
 
 .stills-container img:hover {

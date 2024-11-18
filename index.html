@@ -1,147 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>David Ortiz</title>
-  <link rel="icon" type="image" href="imgs/logo.png">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #1a1a1a;
-      color: #f2f2f2;
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-    }
-    .navbar {
-      background-color: #222;
-      border-bottom: 2px solid #444;
-    }
-    .navbar-brand, .nav-link {
-      color: #f2f2f2;
-      font-weight: 500;
-    }
-    .navbar-brand:hover, .nav-link:hover {
-      color: #ff5733;
-    }
-    .header-section {
-      text-align: center;
-      padding: 100px 0;
-      background: linear-gradient(135deg, #282828 0%, #1a1a1a 100%);
-    }
-    .header-section h1 {
-      font-size: 3.5em;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .header-section p {
-      font-size: 1.5em;
-      color: #bbb;
-      margin-bottom: 50px;
-    }
-    .projects-section {
-      padding: 60px 0;
-    }
-    .projects-section h2 {
-      font-size: 2.5em;
-      font-weight: 700;
-      margin-bottom: 40px;
-      color: #ff5733;
-    }
-    .project-btn {
-      border: 2px solid #ff5733;
-      color: #ff5733;
-      background-color: transparent;
-      margin: 10px;
-      padding: 15px 30px;
-      font-size: 1.2em;
-      border-radius: 50px;
-      transition: all 0.3s ease;
-    }
-    .project-btn:hover {
-      background-color: #ff5733;
-      color: #fff;
-      transform: scale(1.05);
-    }
-    footer {
-      text-align: center;
-      padding: 20px 0;
-      background-color: #222;
-      border-top: 2px solid #444;
-      color: #bbb;
-    }
-    footer p {
-      margin: 0;
-      font-weight: 300;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Ortiz</title>
+    <link rel="icon" type="image" href="imgs/logo.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/281245875a.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <a class="navbar-brand" href="#">David Ortiz</a>
-    </div>
-  </nav>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">David Ortiz</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" style="padding-left: 10px;"> <a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item" style="padding-left: 10px;"> <a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item" style="padding-left: 10px;"> <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item" style="padding-left: 10px;"> <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-  <!-- Header Section -->
-  <section class="header-section">
-    <div class="container">
-      <h1>Welcome to David's Portfolio</h1>
-      <p>Discover my creative projects and professional journey</p>
-    </div>
-  </section>
+    <!-- Header Section -->
+    <section class="header-section" id="home">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-4 d-flex align-items-end">
+                    <img src="imgs/2.jpg" alt="David Ortiz" class="img-fluid"
+                        style="max-width: 400px; padding-top: 20px;">
+                </div>
+                <div class="col-md-8" style="padding-top: 20px;">
+                    <h1>David Ortiz</h1>
+                    <p>A third year wanna be Web Developer that's based in the Philippines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Projects Section -->
-  <section class="projects-section text-center">
-    <div class="container">
-      <h2>My Projects</h2>
-      <div class="d-flex flex-wrap justify-content-center mt-4">
-        <!-- Project Buttons -->
-        <a href="iPhone13/review.html">
-          <button class="project-btn">Project iPhone 13</button>
-        </a>
-        <a href="Taal Volcano/index.html">
-          <button class="project-btn">Project Taal Volcano</button>
-        </a>
-        <a href="Gallery/index.html">
-          <button class="project-btn">Project Gallery</button>
-        </a>
-        <a href="API/index.html">
-          <button class="project-btn">Project API</button>
-        </a>
-        <a href="Embed/index.html">
-          <button class="project-btn">Midterm Embed Video</button>
-        </a>
-        <a href="Parallax/index.html">
-          <button class="project-btn">Midterm Parallax</button>
-        </a>
-        <a href="404.html">
-          <button class="project-btn">Midterm 404</button>
-        </a>
-        <a href="404.html">
-          <button class="project-btn">Project In Progress</button>
-        </a>
-        <a href="404.html">
-          <button class="project-btn">Project In Progress</button>
-        </a>
-        <a href="404.html">
-          <button class="project-btn">Project In Progress</button>
-        </a>
-      </div>
-    </div>
-  </section>
+    <!-- Projects Section -->
+    <section class="projects-section" id="projects">
+        <div class="container text-center">
+            <h2>Projects</h2>
+            <div class="d-flex flex-wrap justify-content-center mt-4">
+                <a href="iPhone13/review.html" class="project-link">
+                    <div class="project-img-container">
+                        <img src="imgs/thumbnail1.png" alt="Project iPhone 13" class="project-img">
+                        <div class="project-name">Project iPhone 13</div>
+                    </div>
+                </a>
+                <a href="Taal Volcano/index.html" class="project-link">
+                    <div class="project-img-container">
+                        <img src="imgs/thumbnail2.png" alt="Project Taal Volcano" class="project-img">
+                        <div class="project-name">Project Taal Volcano</div>
+                    </div>
+                </a>
+                <a href="Gallery/index.html" class="project-link">
+                    <div class="project-img-container">
+                        <img src="imgs/thumbnail3.png" alt="Project Gallery" class="project-img">
+                        <div class="project-name">Project Gallery</div>
+                    </div>
+                </a>
+                <a href="API/index.html" class="project-link">
+                    <div class="project-img-container">
+                        <img src="imgs/thumbnail4.png" alt="Project API" class="project-img">
+                        <div class="project-name">Project API</div>
+                    </div>
+                </a>
+                <a href="Embed/index.html" class="project-link">
+                    <div class="project-img-container">
+                        <img src="imgs/thumbnail5.png" alt="Midterm Embed Video" class="project-img">
+                        <div class="project-name">Midterm Embed Video</div>
+                    </div>
+                </a>
+                <a href="Parallax/index.html" class="project-link">
+                    <div class="project-img-container">
+                        <img src="https://www.sonypicturesanimation.com/sites/default/files/styles/max_1300_x_1300/public/2022-12/SV2_uct0287.1058_lm_v1.jpg?itok=qdcFCTgZ"
+                            alt="Midterm Parallax" class="project-img">
+                        <div class="project-name">Midterm Parallax</div>
+                    </div>
+                </a>
+                <a href="404.html" class="project-link">
+                    <div class="project-img-container">
+                        <img src="https://userway.org/blog/wp-content/uploads/2024/03/The-404-Page_-How-To-Turn-a-404-Error-Into-a-Win-for-Your-Website.jpg"
+                            alt="Midterm 404" class="project-img">
+                        <div class="project-name">Midterm 404</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="container">
-    <p>&copy; 2024 David's Projects. All Rights Reserved.</p>
-  </footer>
+    <section class="about-section" id="about">
+        <div class="container text-center" style="padding-top: 20px;">
+            <h2>About Me</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h5>Introduction</h5>
+                        <p>I am a student with a deep interest in web development, seeking to improve my skills in HTML,
+                            CSS, JavaScript, and various frameworks like React and Bootstrap. I enjoy collaborating on
+                            projects and learning new technologies that help me deliver modern solutions.</p>
+                        <button class="btn btn-primary">Learn More</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>Skills</h5>
+                    <ul>
+                        <li><strong>Frontend:</strong> HTML, CSS, JavaScript, Bootstrap</li>
+                        <li><strong>Backend:</strong> PHP</li>
+                        <li><strong>Database:</strong> MySQL</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Bootstrap JS and dependencies -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Footer -->
+    <footer class="container-fluid text-center mt-5">
+        <p>&copy; 2024 David Ortiz. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
-</html> 
+
+</html>
