@@ -8,21 +8,19 @@ body {
 .navbar {
   background-color: white;
   padding: 20px;
-
 }
 
-.nav-link {
+.navbar .nav-link {
   color: #f2f2f2;
-  font-weight: 1000;
+  font-weight: 500;
   font-size: 15px;
 }
 
-.navbar-brand {
+.navbar .navbar-brand {
   color: #f2f2f2;
-  font-weight: 1000;
-  font-size: 25px;
+  font-weight: 700;
+  font-size: 35px;
 }
-
 
 .header-section {
   text-align: center;
@@ -90,7 +88,6 @@ body {
   padding: 15px;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.6);
-  /* Dark background for text */
   color: white;
   font-size: 1.2em;
   font-weight: bold;
@@ -100,11 +97,6 @@ body {
 
 .project-img-container:hover .project-name {
   opacity: 1;
-}
-
-.about-section {
-  background-color: white;
-  padding-top: 10px;
 }
 
 footer {
