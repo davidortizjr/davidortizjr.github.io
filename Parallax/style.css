@@ -9,6 +9,7 @@
 body {
     background-color: #0F0F1B;
     font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
 .main-content {
@@ -63,4 +64,28 @@ img.img-fluid {
 
 .stills-container img:hover {
     transform: scale(1.05);
+}
+
+@media (max-width: 1200px) {
+    img.img-fluid {
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 992px) {
+    img.img-fluid {
+        max-width: 90%;
+    }
+    .stills-container img {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    img.img-fluid {
+        max-width: 95%;
+    }
+    .stills-container img {
+        max-width: 100%;
+    }
 }
