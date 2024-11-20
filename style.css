@@ -3,6 +3,7 @@ body {
   color: #000000;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .navbar {
