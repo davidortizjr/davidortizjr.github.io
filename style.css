@@ -27,6 +27,7 @@ body {
   text-align: center;
   padding: 100px 0;
   background-color: #ffffff;
+  overflow: hidden;
 }
 
 .header-section h1 {
