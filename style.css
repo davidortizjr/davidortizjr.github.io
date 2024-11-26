@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(241, 241, 202);
+  background-color: white;
   color: #000000;
   font-family: 'Montserrat', sans-serif;
   margin: 0;
@@ -7,12 +7,12 @@ body {
 }
 
 .navbar {
-  background-color: white;
+  background-color: rgb(241, 241, 202);
   padding: 20px;
 }
 
 .navbar .nav-link {
-  color: #f2f2f2;
+  color: rgb(241, 241, 202);
   font-weight: 500;
   font-size: 15px;
 }
@@ -25,8 +25,7 @@ body {
 
 .header-section {
   text-align: center;
-  padding: 100px 0;
-  background-color: #ffffff;
+  background-color: white;
   overflow: hidden;
 }
 
@@ -42,7 +41,25 @@ body {
   margin-bottom: 50px;
 }
 
+.about-section {
+  background-color: rgb(241, 241, 202);
+  padding: 100px;
+}
+
+.about-section p {
+  font-size: 15px;
+}
+
+.about-section h5 {
+  font-size: 20px;
+}
+
+.about-section li {
+  font-size: 15px;
+}
+
 .projects-section {
+  background-color: #ffffff;
   padding: 60px 0;
 }
 
@@ -105,7 +122,7 @@ body {
 footer {
   text-align: center;
   padding: 20px 0;
-  background-color: #ffffff;
+  background-color: rgb(241, 241, 202);
   color: #bbb;
 }
 
