@@ -28,3 +28,17 @@ p {
   transition: opacity .6s ease-in-out;
   z-index: -1;
 }
+
+@media only screen and (max-width: 600px) {
+  .categories a,
+  p {
+    font-size: 3rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .categories a,
+  p {
+    font-size: 2rem;
+  }
+}
