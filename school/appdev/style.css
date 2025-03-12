@@ -119,7 +119,7 @@ body {
     }
 
     .proj p {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 }
 
@@ -129,6 +129,10 @@ body {
     }
 
     .fav p {
-        font-size: 1.5rem;
+        font-size: 1rem;
+    }
+
+    .terminal-loader {
+        width: 13em;
     }
 }
