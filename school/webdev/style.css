@@ -22,19 +22,13 @@ body {
     position: relative;
     width: 300px;
     height: 300px;
-    border-radius: 10px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     background: no-repeat center/cover;
-}
-
-.card svg {
-    width: 48px;
-    fill: #333;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .card:hover {
@@ -74,10 +68,6 @@ body {
     line-height: 1.4;
 }
 
-.card:hover svg {
-    scale: 0;
-    transform: rotate(-45deg);
-}
 
 @media only screen and (max-width: 600px) {
     .navbar-brand img {
