@@ -1,0 +1,21 @@
+body {
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navbar img {
+    width: 4.5rem;
+    margin-left: 16px;
+    margin-bottom: 8px;
+}
+
+.navbar .nav {
+    border-bottom: #8a8787 solid 1px;
+}
+
+.card {
+    background-color: #ffff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
