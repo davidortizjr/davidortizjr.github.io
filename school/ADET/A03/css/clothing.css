@@ -1,0 +1,22 @@
+body {
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navbar img {
+    width: 3rem;
+    margin-left: 4px;
+    margin-bottom: 4px;
+}
+
+.navbar {
+    background-color: #f1f1f1ff;
+    border-bottom: #8a8787 solid 1px;
+    padding: 8px 0px 4px 8px;
+}
+
+@media screen and (min-width: 768px) {
+    .navbar-nav {
+        margin-left: 5rem;
+    }
+}

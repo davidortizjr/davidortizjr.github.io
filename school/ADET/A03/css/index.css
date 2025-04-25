@@ -9,14 +9,10 @@ body {
     margin-bottom: 4px;
 }
 
-.navbar .nav {
+.navbar {
     background-color: #f1f1f1ff;
     border-bottom: #8a8787 solid 1px;
-    padding: 8px 0px 0px 8px
-}
-
-.navbar {
-    padding: 0px;
+    padding: 8px 0px 4px 8px;
 }
 
 .card {
@@ -30,4 +26,26 @@ body {
 h3 {
     font-weight: bold;
     color: #000000;
+}
+
+@media screen and (min-width: 768px) {
+    .navbar-nav {
+        margin-left: 5rem;
+    }
+
+    img[alt="startPic"] {
+        height: 700px !important;
+        width: 1000px !important;
+        object-fit: cover;
+    }
+
+    .card {
+        height: 400px;
+        width: auto !important;
+    }
+
+    .card[alt="dom"] {
+        height: 805px !important;
+    }
+
 }
