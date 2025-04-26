@@ -4,19 +4,34 @@ body {
 }
 
 .navbar img {
-    width: 3rem;
+    width: 5rem;
     margin-left: 4px;
     margin-bottom: 4px;
 }
 
 .navbar {
-    background-color: #f1f1f1ff;
+    background-color: hsl(0, 0%, 90%);
     border-bottom: #8a8787 solid 1px;
     padding: 8px 0px 4px 8px;
+}
+
+.header {
+    font-family: "New Amsterdam", sans-serif;
+    font-weight: 400;
+    font-size: 3rem;
+}
+
+.muscle {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
 }
 
 @media screen and (min-width: 768px) {
     .navbar-nav {
         margin-left: 5rem;
+    }
+
+    .muscle {
+        font-size: 2rem;
     }
 }
