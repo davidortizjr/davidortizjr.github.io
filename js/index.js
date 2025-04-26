@@ -3,7 +3,7 @@ overlay.classList.add("background-overlay");
 document.body.appendChild(overlay);
 
 document.querySelector(".school").addEventListener("mouseover", function () {
-    overlay.style.backgroundImage = "url('imgs/schoolBG.jpg')";
+    overlay.style.backgroundImage = "url('img/schoolBG.jpg')";
     overlay.style.opacity = "1";
 });
 
@@ -12,7 +12,7 @@ document.querySelector(".school").addEventListener("mouseout", function () {
 });
 
 document.querySelector(".personal").addEventListener("mouseover", function () {
-    overlay.style.backgroundImage = "url('imgs/personalBG.jpeg')";
+    overlay.style.backgroundImage = "url('img/personalBG.jpeg')";
     overlay.style.opacity = "1";
 });
 
@@ -21,7 +21,7 @@ document.querySelector(".personal").addEventListener("mouseout", function () {
 });
 
 document.querySelector(".about").addEventListener("mouseover", function () {
-    overlay.style.backgroundImage = "url('imgs/personalBG.jpeg')";
+    overlay.style.backgroundImage = "url('img/personalBG.jpeg')";
     overlay.style.opacity = "1";
 });
 
