@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'Gotham';
+    src: url('font/Gotham.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'GothamBold';
+    src: url('font/GOTHAM-BOLD.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Hertical';
+    src: url('font/Hertical Sans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --ff-title: "Hertical", sans-serif;
+    --ff-text: "Gotham", sans-serif;
+    --ff-text-bold: "GothamBold", sans-serif;
+    --fs-header: 3rem;
+    --fs-h1: 2rem;
+    --fs-h2: 1.5rem;
+    --fs-h3: 1.25rem;
+    --fs-h4: 1.125rem;
+    --fs-h7: .75rem;
+    --fc-brown: #4c1b1b;
+    --fc-green: #028e85;
+    --fc-gray: #1B1A1A;
+    --fc-white: #F1f1f1f1;
+}
+
+.navbar, .navbar nav {
+    font-size: var(--fs-h2);
+    font-family: var(--ff-text);
+}
+
+.nav-link.active{
+    color: var(--fc-brown) !important;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    margin-top: 4px;
+}
+
+.card {
+    border-radius: 0;
+}
+
+label.form-label {
+    font-family: var(--ff-text);
+}
+
+.btn-primary {
+    font-family: var(--ff-text);
+    background-color: var(--fc-green);
+}
+
+.copyright {
+    font-size: var(--fs-h7);
+}
+
+footer {
+    font-size: var(--fs-h3);
+    font-family: var(--ff-text);
+    color: var(--fc-white);
+    background-color: var(--fc-gray);
+    padding: 1rem;
+}

@@ -36,7 +36,7 @@ if (isset($_GET['artist'])) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image" href="../../imgs/logo.png">
+    <link rel="icon" type="image" href="../../img/logo.png">
 </head>
 
 <body>
