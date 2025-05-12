@@ -27,11 +27,11 @@
                     <li class="nav-item mx-3">
                         <a class="nav-link active" aria-current="page" href="#about">ABOUT US</a>
                     </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link active" href="#footer">CONTACT</a>
-                    </li>
                     <li class="nav-item mx-3" style="padding-right: 16px;">
                         <a class="nav-link active" href="#reservation-form">RESERVATION</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active" href="#footer">CONTACT</a>
                     </li>
                 </ul>
             </div>
@@ -41,37 +41,46 @@
     <section class="bento">
         <div class="container-fluid justify-content-center align-items-center">
             <div class="row">
-                <div class="col p-0">
-                    <div class="card align-items-center"
-                        style="height: 500px; width: 100%; background-image: url('img/pic03.jpg'); background-size: cover; background-position: center;">
-                        <img src="img/Primary Logo.png" style="width: 250px; height: auto; margin-top: 28px;"
-                            class="logo">
-                        <h2 class="tagline mt-3 text-center p-2"
-                            style="font-family: var(--ff-text); color: var(--fc-brown); background-color: #028e85d0;">
-                            WHERE COFFEE MEETS CONNECTIONS</h1>
-                    </div>
+                <div class="col p-0 text-center" style="height: 500px; width: 100%; background-image: url('img/pic03.jpg'); background-size: cover;
+                    background-position: center;">
+                    <img src="img/Primary Logo.png"
+                        style="width: 250px; height: auto; margin-top: 28px; backdrop-filter: blur(2px); border-radius: 15px;"
+                        class="logo p-3">
+                    <h2 class="tagline mt-3 text-center p-2"
+                        style="font-family: var(--ff-text); color: var(--fc-brown); backdrop-filter: blur(6px); border-radius: 15px;">
+                        WHERE COFFEE MEETS CONNECTIONS</h1>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="about" id="about">
-        <div class="container-fluid px-5"
-            style="background-image: url(img/pic06.jpg); background-repeat: no-repeat; background-size: cover; background-position: center; padding: 50px 0;">
-            <h2 style="font-family: var(--ff-title); color: var(--fc-white);">ABOUT US</h1>
-                <p style="font-family: var(--ff-text); color: var(--fc-white); width: 200px;">Lorem ipsum dolor
-                    sit
-                    amet,
-                    consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                    enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+        <div class="container-fluid px-5 d-flex justify-content-end flex-column"
+            style="background-image: url(img/pic05.jpg); background-repeat: no-repeat; background-size: cover; background-position: center; padding: 50px 0;">
+            <div class="row">
+                <div class="col mb-3 d-flex justify-content-end">
+                    <h2 style="font-family: var(--ff-title); color: var(--fc-white); margin-right: 4rem;">ABOUT US</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col d-flex justify-content-end">
+                    <p class="text-start" style="font-family: var(--ff-text); color: var(--fc-white); width: 200px;">
+                        Lorem ipsum dolor
+                        sit
+                        amet,
+                        consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut
+                        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat
+                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="reserve-header text-center">
-        <div class="container-fluid" style="background-color: var(--fc-green); padding: 24px 0;">
+        <div class="container-fluid" style="padding: 24px 0;">
             <h2 class="tagline mt-3" style="font-family: var(--ff-text); color: var(--fc-brown);">Reserve Your Spot for
                 Coffee, Games, and Good Times!</h1>
         </div>
@@ -84,39 +93,42 @@
     </section>
 
     <section class="reservation-form" id="reservation-form">
-        <div class="container-fluid pb-3">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center flex-column mt-3">
-                    <div class="card p-5 shadow rounded-3">
-                        <div class="h4 mx-auto px-5" style="font-family: var(--ff-title);">
-                            RESERVATION FORM
-                        </div>
-                        <form class="mt-3">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Enter your name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone Number</label>
-                                <input type="text" class="form-control" id="number" placeholder="Enter your Phone Number">
-                            </div>
-                            <div class="mb-3">
-                                <label for="date" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="date">
-                            </div>
-                            <div class="mb-3">
-                                <label for="time" class="form-label">Time</label>
-                                <input type="time" class="form-control" id="time">
-                            </div>
-                            <div class="mb-3">
-                                <label for="table" class="form-label">Table Number</label>
-                                <input type="number" class="form-control" id="table" placeholder="Enter table number">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
+        <div class="container p-4 d-flex justify-content-center">
+            <div class="card ">
+                <a class="reserve">RESERVATION FORM</a>
+                <div class="inputBox1">
+                    <input type="text" required="required" id="name">
+                    <span class="user">Name</span>
                 </div>
+
+                <div class="inputBox">
+                    <input type="text" required="required" id="number">
+                    <span>Phone Number</span>
+                </div>
+
+                <div class="inputBox">
+                    <input type="number" required="required" id="table">
+                    <span>Table Number</span>
+                </div>
+
+                <div class="inputBox">
+                    <input type="date" required="required" id="date">
+                    <span style="margin-left: 8rem">Date</span>
+                </div>
+
+                <div class="inputBox">
+                    <input type="time" required="required" id="timeIn">
+                    <span style="margin-left: 6.5rem">Time In</span>
+                </div>
+
+                <div class="inputBox">
+                    <input type="time" required="required" id="timeOut">
+                    <span style="margin-left: 6.5rem">Time Out</span>
+                </div>
+
+                <button class="enter">Enter</button>
             </div>
+        </div>
     </section>
 
     <footer class="text-center text-lg-start" id="footer">
