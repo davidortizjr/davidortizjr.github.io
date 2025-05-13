@@ -193,7 +193,6 @@ footer {
     .about p,
     h2 {
         backdrop-filter: blur(2px);
-        border-radius: 15px;
     }
 
     .inputBox span {
