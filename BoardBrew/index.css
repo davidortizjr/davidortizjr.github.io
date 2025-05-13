@@ -49,6 +49,17 @@ a {
     margin-top: 4px;
 }
 
+.tagline {
+    font-family: var(--ff-text);
+    color: var(--fc-brown);
+    background-color: #028e8593;
+    backdrop-filter: blur(2px);
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin: 0 auto;
+}
+
 .card {
     border-radius: 0;
 }
