@@ -14,7 +14,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-shadow">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html"><img src="img/Secondary Logo.png"
                     style="width: 200px; height: 100%; padding-left: 36px;"></a>
@@ -39,13 +39,11 @@
     </nav>
 
     <section class="bento">
-        <div class="container-fluid justify-content-center align-items-center">
+        <div class="container-fluid justify-content-center align-items-center" style="background-color: var(--fc-white);">
             <div class="row">
-                <div class="col-12 p-0 text-center" style="height: 500px; background-image: url('img/pic03.jpg'); background-size: cover;
-                    background-position: center;">
+                <div class="col-12 col-lg-6 p-0 text-center align-items-center justify-content-center d-flex flex-column">
                     <img src="img/Primary Logo.png"
-                        style="width: 250px; height: auto; margin-top: 28px; backdrop-filter: blur(2px); border-radius: 8px;"
-                        class="logo p-3">
+                        style="width: 250px; height: auto; margin-top: 16px; border-radius: 8px;" class="logo p-3">
                     <div class="row">
                         <div class="col">
                             <h2 class="tagline mt-3">
@@ -53,50 +51,59 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-lg-6">
+                    <img src="img/pic03.jpg"
+                        style="width: 100%; height: auto; margin-top: 16px; backdrop-filter: blur(2px); border-radius: 8px;"
+                        class="logo p-3">
+                </div>
             </div>
         </div>
     </section>
 
     <section class="about" id="about">
-        <div class="container-fluid px-5 d-flex justify-content-end flex-column"
-            style="background-image: url(img/pic05.jpg); background-repeat: no-repeat; background-size: cover; background-position: center; padding: 50px 0;">
+        <div class="container-fluid px-3 d-flex justify-content-end flex-column" style="background-color: var(--fc-green);">
             <div class="row">
-                <div class="col mb-3 d-flex justify-content-end">
-                    <h2 style="font-family: var(--ff-title); color: var(--fc-white); margin-right: 4rem;">ABOUT US</h2>
+                <div class="col-12 col-lg-6 mb-3">
+                    <img src="img/pic02.jpg"
+                        style="width: 100%; height: auto; margin-top: 16px; backdrop-filter: blur(2px); border-radius: 8px;"
+                        class="logo p-3">
                 </div>
-            </div>
-            <div class="row">
-                <div class="col d-flex justify-content-end">
-                    <p class="text-start" style="font-family: var(--ff-text); color: var(--fc-white); width: 200px;">
+                <div class="col-12 col-lg-6 align-items-center justify-content-center d-flex flex-column">
+                    <h2 style="font-family: var(--ff-title); margin-right: 4rem;">ABOUT US</h2>
+                    <p class="text-start" style="font-family: var(--ff-text); width: 200px;">
                         Lorem ipsum dolor
                         sit
                         amet,
-                        consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
+                        aliqua.
                         Ut
-                        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo
                         consequat
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat.
                     </p>
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
     <section class="reserve-header text-center">
-        <div class="container-fluid" style="padding: 24px 0;">
-            <h2 class="tagline mt-3" style="font-family: var(--ff-text); color: var(--fc-brown);">Reserve Your Spot for
+        <div class="container-fluid" style="padding: 16px; background-color: var(--fc-white);">
+            <h2 class="tagline m-3" style="font-family: var(--ff-text-bold); color: var(--fc-brown);">Reserve Your Spot for
                 Coffee, Games, and Good Times!</h1>
         </div>
     </section>
 
     <section class="seating-arrangement">
-        <div class="container-fluid px-0">
-            <img src="img/Reservation.png" style="width: 100%; height: auto;" class="img-fluid logo">
+        <div class="container-fluid p-5" style="background-color: var(--fc-green);">
+            <img src="img/seat.png" style="width: 100%; height: auto;" class="img-fluid logo">
         </div>
     </section>
 
     <section class="reservation-form" id="reservation-form">
-        <div class="container p-4 d-flex justify-content-center">
+        <div class="container-fluid p-4 d-flex justify-content-center" style="background-color: var(--fc-white);">
             <div class="card ">
                 <a class="reserve">RESERVATION FORM</a>
                 <div class="inputBox1">
