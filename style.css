@@ -10,9 +10,18 @@ body {
 .categories a,
 p {
   text-decoration: none;
-  color: black;
+  color: rgb(66, 65, 65);
   font-weight: bold;
   font-size: 5rem;
+}
+
+.categories a:hover {
+  backdrop-filter: blur(5px);
+  border-radius: 16px;
+}
+
+.categories p:hover {
+  color: #000000;
 }
 
 .background-overlay {
