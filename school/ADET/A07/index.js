@@ -36,6 +36,13 @@ async function redirectToSpotify() {
 }
 
 async function getAccessToken(code) {
+    const savedToken = localStorage.getItem('spotify_token');
+    const expiry = localStorage.getItem('spotify_token_expiry');
+
+    if (savedToken && expiry && Date.now() < parseInt(expiry)) {
+        return savedToken;
+    }
+
     const verifier = localStorage.getItem('verifier');
     const body = new URLSearchParams({
         client_id: clientId,
@@ -54,7 +61,13 @@ async function getAccessToken(code) {
     });
 
     const data = await response.json();
-    return data.access_token;
+
+    if (data.access_token && data.expires_in) {
+        const expiryTime = Date.now() + data.expires_in * 1000;
+        localStorage.setItem('spotify_token', data.access_token);
+        localStorage.setItem('spotify_token_expiry', expiryTime.toString());
+        return data.access_token;
+    }
 }
 
 async function fetchTopArtists(token) {
@@ -83,14 +96,22 @@ async function main() {
 
     if (code) {
         document.getElementById('loginSection').style.display = 'none';
-        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('artistSection').style.display = 'block';
+        document.getElementById('trackSection').style.display = 'block';
 
         const token = await getAccessToken(code);
         const artists = await fetchTopArtists(token);
-        const list = document.getElementById('artistList');
+        const tracks = await fetchTopTracks(token);
+        const artistList = document.getElementById('artistList');
+        const trackList = document.getElementById('trackList');
 
         if (artists.length === 0) {
-            list.innerHTML = '<li class="list-group-item">No artists found.</li>';
+            artistList.innerHTML = '<li class="list-group-item">No artists found.</li>';
+            return;
+        }
+
+        if (tracks.length === 0) {
+            trackList.innerHTML = '<li class="list-group-item">No tracks found.</li>';
             return;
         }
 
@@ -99,10 +120,21 @@ async function main() {
             li.className = 'list-group-item d-flex align-items-center';
             li.innerHTML = `
             <img src="${artist.images[0]?.url}" width="50" class="me-3 rounded">
-            <strong>${artist.name}</strong> – ${artist.genres.slice(0, 2).join(', ')}
+            <strong>${artist.name}</strong>
           `;
-            list.appendChild(li);
+            artistList.appendChild(li);
         });
+
+        tracks.forEach(track => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex align-items-center';
+            li.innerHTML = `
+                <img src="${track.album.images[0]?.url}" width="50" class="me-3 rounded">
+                <strong>${track.name}</strong> – ${track.artists.map(a => a.name).join(', ')}
+            `;
+            trackList.appendChild(li);
+        });
+
     }
 }
 
