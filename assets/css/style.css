@@ -88,6 +88,12 @@ div.bg-white {
     max-height: 120px;
 }
 
+.gallery {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 main::-webkit-scrollbar {
     width: 8px;
 }

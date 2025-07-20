@@ -1,4 +1,4 @@
-function loadPage(content = 'client') {
+function loadPage(content = 'school') {
     const maincontent = document.getElementById('maincontent');
 
     fetch(`projects/${content}.html`)
