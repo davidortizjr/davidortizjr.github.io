@@ -45,6 +45,28 @@ h2 {
     overflow-y: auto;
 }
 
+.card {
+    background-color: #000000a6;
+    height: 150px;
+    width: 150px;
+    box-shadow: 4px 4px 6px rgba(99, 98, 98, 0.5);
+}
+
+.skills .card i,
+.skills .card img {
+    width: 70px;
+    height: 70px;
+    font-size: 50px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+h5 {
+    color: #fff;
+    font-weight: bold;
+}
+
 .language {
     background-color: #3B82F64D;
     color: #3B82F6;
