@@ -51,8 +51,8 @@ p {
 
 .card {
     background-color: #000000a6;
-    height: 150px;
-    width: 150px;
+    height: 130px;
+    width: 130px;
     box-shadow: 4px 4px 6px rgba(99, 98, 98, 0.5);
 }
 
@@ -62,9 +62,9 @@ p {
 
 .skills .card i,
 .skills .card img {
-    width: 70px;
-    height: 70px;
-    font-size: 50px;
+    width: 60px;
+    height: 60px;
+    font-size: 40px;
     object-fit: contain;
     display: block;
     margin: 0 auto;
@@ -117,10 +117,12 @@ h5 {
     background-color: #374151;
 }
 
-div.bg-white {
+div.bg {
+    background-color: #ffffff00;
     max-width: 200px;
     min-width: 128px;
     max-height: 120px;
+    object-fit: cover;
 }
 
 .gallery {
@@ -185,4 +187,33 @@ main::-webkit-scrollbar-track {
     div.bg-white {
         max-height: 90px;
     }
+}
+
+.skills .tech-grid .col {
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+/* medium: 3 columns */
+@media (max-width: 991.98px) {
+    .skills .tech-grid .col {
+        flex: 0 0 33.3333%;
+        max-width: 33.3333%;
+    }
+}
+
+/* small: 2 columns */
+@media (max-width: 767.98px) {
+    .skills .tech-grid .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* keep cards centered */
+.skills .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
