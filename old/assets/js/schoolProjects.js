@@ -38,14 +38,16 @@ export function renderSchoolProjects(containerId = "maincontent") {
 
     container.innerHTML = schoolProjects.map(project => `
         <div class="container-fluid d-flex border-start border-3 border-dark ps-3 mb-5">
-            <div class="bg-white">
-                <img src="${project.img}" alt="gallery" class="gallery img-fluid">
-            </div>
-            <div class="px-3">
-                <a href="${project.link}" target="_blank">
-                    <h4 class="fw-bold">${project.title}</h4>
-                </a>
-                <p>${project.desc}</p>
+            <div class="row">
+                <div class="col bg-white">
+                    <img src="${project.img}" alt="gallery" class="gallery img-fluid">
+                </div>
+                <div class="col px-3">
+                    <a href="${project.link}" target="_blank">
+                        <h4 class="fw-bold">${project.title}</h4>
+                    </a>
+                    <p>${project.desc}</p>
+                </div>
             </div>
         </div>
     `).join('');

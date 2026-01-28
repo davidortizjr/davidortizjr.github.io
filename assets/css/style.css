@@ -1,219 +1,26 @@
-body {
-    background: #111;
-    color: #fff;
-    font-family: "Inter", sans-serif;
-    background-size: 50px 50px;
-    background-image:
-        linear-gradient(to right, rgba(128, 128, 128, 0.356) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(128, 128, 128, 0.356) 1px, transparent 1px);
+html {
+    scroll-behavior: smooth;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
-a {
-    color: #fff;
-    text-decoration: none;
+.glass-nav {
+    background: rgba(16, 22, 34, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.relative {
-    position: relative;
+.glass-card {
+    background: rgba(25, 34, 51, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-h1,
-h2,
-h3,
-h4 {
-    color: #D1D5DB;
-    font-weight: 700;
+.gradient-bg {
+    background: radial-gradient(circle at 0% 0%, rgba(19, 91, 236, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 100% 100%, rgba(19, 91, 236, 0.1) 0%, transparent 40%);
 }
 
-.paragraph,
-p {
-    color: #D1D5DB;
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-.left {
-    padding-left: 10%;
-    padding-block: 5rem;
-}
-
-.profile {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-}
-
-.right {
-    padding-right: 10%;
-    padding-block: 5rem;
-    overflow-y: auto;
-}
-
-.card {
-    background-color: #000000a6;
-    height: 130px;
-    width: 130px;
-    box-shadow: 4px 4px 6px rgba(99, 98, 98, 0.5);
-}
-
-.card:hover {
-    box-shadow: 4px 4px 6px rgba(99, 98, 98, 0.8);
-}
-
-.skills .card i,
-.skills .card img {
-    width: 60px;
-    height: 60px;
-    font-size: 40px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
-h5 {
-    color: #fff;
-    font-weight: bold;
-}
-
-.language {
-    background-color: #3B82F64D;
-    color: #3B82F6;
-    font-size: .75rem;
-    line-height: 1rem;
-}
-
-.framework {
-    background-color: #22C55E4D;
-    color: #22C55E;
-    font-size: .75rem;
-    line-height: 1rem;
-}
-
-.database {
-    background-color: #EF44444D;
-    color: #EF4444;
-    font-size: .75rem;
-    line-height: 1rem;
-}
-
-.tool {
-    background-color: #EAB3084D;
-    color: #EAB308;
-    font-size: .75rem;
-    line-height: 1rem;
-}
-
-.college {
-    width: 80px;
-    height: 80px;
-    margin-right: 1rem;
-}
-
-.btn {
-    background-color: #3741514D;
-}
-
-.btn:focus {
-    background-color: #374151;
-}
-
-div.bg {
-    background-color: #ffffff00;
-    max-width: 200px;
-    min-width: 128px;
-    max-height: 120px;
-    object-fit: cover;
-}
-
-.gallery {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-main::-webkit-scrollbar {
-    width: 8px;
-}
-
-main::-webkit-scrollbar-thumb {
-    background-color: #4a5568;
-    border-radius: 4px;
-}
-
-main::-webkit-scrollbar-track {
-    background: #2d3748;
-}
-
-@media screen and (max-width: 768px) {
-
-    body {
-        overflow-y: auto;
-    }
-
-    .left {
-        padding-inline: 5rem;
-        padding-block: 3rem;
-        left: 0;
-    }
-
-    .right {
-        padding-inline: 5rem;
-        padding-block: 3rem;
-        left: 0;
-        overflow-y: visible;
-    }
-}
-
-@media screen and (max-width: 425px) {
-
-    .left {
-        padding-inline: 2rem;
-        padding-block: 3rem;
-        left: 0;
-    }
-
-    .right {
-        padding-inline: 2rem;
-        padding-block: 3rem;
-        left: 0;
-    }
-
-    .college {
-        width: 100px;
-        height: 100px;
-        margin-right: 8rem;
-    }
-
-    div.bg-white {
-        max-height: 90px;
-    }
-}
-
-.skills .tech-grid .col {
-    flex: 0 0 20%;
-    max-width: 20%;
-}
-
-/* medium: 3 columns */
-@media (max-width: 991.98px) {
-    .skills .tech-grid .col {
-        flex: 0 0 33.3333%;
-        max-width: 33.3333%;
-    }
-}
-
-/* small: 2 columns */
-@media (max-width: 767.98px) {
-    .skills .tech-grid .col {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
-
-/* keep cards centered */
-.skills .card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.project-border-accent {
+    border-left: 4px solid #135bec;
 }
