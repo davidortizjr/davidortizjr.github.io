@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Our Playful Scrapbook</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&amp;family=Indie+Flower&amp;family=Patrick+Hand&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-teal": "#4fb3ad",
+                        "soft-peach": "#ffdbc5",
+                        "pastel-yellow": "#fef9c3",
+                        "washi-pink": "#fca5a5",
+                        "washi-blue": "#93c5fd",
+                        "washi-green": "#86efac",
+                        "ink-blue": "#1e293b"
+                    },
+                    fontFamily: {
+                        "bubbly": ["Fredoka", "sans-serif"],
+                        "handwritten": ["Indie Flower", "cursive"],
+                        "script": ["Patrick Hand", "cursive"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply font-bubbly bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')] bg-pastel-yellow/30;
+            }
+        }
+        .washi-tape {
+            @apply absolute h-8 w-24 opacity-80 z-20 shadow-sm pointer-events-none;
+            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40"><path d="M0,0 L100,0 L100,40 L0,40 Z" /></svg>');
+            clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+        }
+        .polaroid-frame {
+            @apply bg-white p-3 pb-12 shadow-xl border border-slate-100 relative transition-transform duration-300;
+        }
+        .doodle-float {
+            @apply absolute pointer-events-none select-none opacity-60;
+        }
+    </style>
+</head>
+
+<body class="text-ink-blue min-h-screen">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <header
+            class="flex items-center justify-between px-10 py-6 sticky top-0 z-50 bg-white/60 backdrop-blur-md border-b-2 border-dashed border-primary-teal/30">
+            <div class="flex items-center gap-3 text-primary-teal">
+                <span class="material-symbols-outlined text-4xl fill-1">favorite</span>
+                <h2 class="text-2xl font-bold font-handwritten text-slate-800">our little story</h2>
+            </div>
+            <div class="flex flex-1 justify-end gap-8 items-center">
+                <nav class="flex items-center gap-9">
+                    <a class="text-slate-700 text-lg font-medium hover:text-primary-teal transition-colors font-script"
+                        href="#">Home</a>
+                    <a class="text-slate-700 text-lg font-medium hover:text-primary-teal transition-colors font-script"
+                        href="#">Scrapbook</a>
+                    <a class="text-slate-700 text-lg font-medium hover:text-primary-teal transition-colors font-script"
+                        href="#">Timeline</a>
+                    <a class="text-slate-700 text-lg font-medium hover:text-primary-teal transition-colors font-script"
+                        href="#">Us</a>
+                </nav>
+                <div class="h-8 w-px bg-primary-teal/20"></div>
+                <button
+                    class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-full h-11 px-5 bg-primary-teal text-white text-lg font-bold shadow-md hover:scale-105 transition-all font-script">
+                    <span>Sign In</span>
+                </button>
+            </div>
+        </header>
+        <main class="flex-1">
+            <section class="relative py-20 px-6 overflow-hidden bg-soft-peach/20">
+                <div class="max-w-[1200px] mx-auto flex flex-col lg:flex-row items-center gap-16">
+                    <div class="flex flex-col gap-6 text-left max-w-xl z-10 relative">
+                        <div class="doodle-float -top-10 -left-10 transform -rotate-12 text-primary-teal opacity-40">
+                            <span class="material-symbols-outlined text-6xl">draw</span>
+                        </div>
+                        <span
+                            class="bg-primary-teal/10 text-primary-teal px-4 py-1 rounded-full w-fit font-bold text-sm">SINCE
+                            2018</span>
+                        <h1 class="text-slate-800 text-5xl md:text-7xl font-bold leading-[1.1] font-handwritten">
+                            Making memories <br /><span class="text-primary-teal">together...</span>
+                        </h1>
+                        <p class="text-slate-600 text-xl font-script leading-relaxed">
+                            A cozy little corner for our laughs, trips, and all the "remember whens" we've shared so
+                            far.
+                        </p>
+                        <div class="flex gap-4 mt-4">
+                            <button
+                                class="bg-primary-teal text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:rotate-2 transition-transform">Start
+                                Exploring</button>
+                            <button
+                                class="bg-white border-2 border-primary-teal/20 text-primary-teal px-8 py-3 rounded-xl font-bold shadow-md hover:-rotate-2 transition-transform">See
+                                Timeline</button>
+                        </div>
+                    </div>
+                    <div class="relative w-full max-w-md h-[450px] mt-10 lg:mt-0">
+                        <div
+                            class="polaroid-frame absolute inset-0 transform -rotate-12 translate-x-4 translate-y-4 scale-95 opacity-60">
+                            <div class="w-full h-full bg-cover bg-center"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAHqxTEdBpklEaEEyx6QvxfRhkdWVWZd23pRHhPSA4vLpBZGwqnA44r4sX4sgQpLlVtWW_7fPXIfOhxqnko7Ke10VrFIHUbyUdJdqUGEheCRJgQtExUm0zvWwWBkiVJ0piveBP_0eRXDHzv6Pe759GmCYS3Zb6ZcWHoS2KdZB1yitFJJNx-HaC80kV5D7_79qePyzgCIBGSON7wY5chKqXnFcwARBbJZqgsWCMb0-0f6NbBYGU7Cdf4930GCFZ74tkWYYIQLdLfVbv6");'>
+                            </div>
+                        </div>
+                        <div
+                            class="polaroid-frame absolute inset-0 transform rotate-6 translate-x-2 -translate-y-2 opacity-80">
+                            <div class="w-full h-full bg-cover bg-center"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMtdYuoBN8-eSyxgjviFHKyTRyNEHDSEdP9A4g_jEYJbmuiQ-1MLyB42gtLWFdiF7XbE3Xb0t8jeZPNPVBefVtvO8ebPTxaGoqAq_t70nS0QSuNVXIEgCgpNZ4vGkvWhHXgaT261ylTq0wdklc-i0cOB3kGWHk-eSU-uCJpZ-m-UMjcuWAtpOGOhMIEtaU0vJE6qX5CUxKYgC2ddoUqqBNvEE5Mxdlj1AJLp85k_1mf0ndnz8oDnqbozMuFiGMW4GPoN2xr8Z3Zp");'>
+                            </div>
+                        </div>
+                        <div
+                            class="polaroid-frame absolute inset-0 transform -rotate-2 hover:rotate-0 transition-transform cursor-pointer">
+                            <div class="washi-tape bg-washi-blue/60 -top-4 left-1/2 -translate-x-1/2 rotate-3"></div>
+                            <div class="w-full h-full bg-cover bg-center"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8VZMpni_qwjO-b5BZqj6uKdGwbOc15MahBLREAXIXXvi9qnY6A-udllXM8o-SBvlG2BJIqaOUB2K__FJHHhXiEYqoujjuFzY_DCHi_TAG1T6bJGZrOxf8VpBlUBr8Mxz1Dc4VsAdfjbezZHEYwi_v9jcUpV-l428A8ENoYJOJPZtIgAXaK6osofspGZvwmZmiS2CR84iCku-AZ0EuepIcHjPbvUFnYPDdFPpZdIsUmRULH8Zq8D-JMPFogW2MTQQ48kxhX1eywq0e");'>
+                            </div>
+                            <p
+                                class="absolute bottom-2 left-0 w-full text-center font-handwritten text-xl text-slate-700">
+                                Us in 2023! ❤️</p>
+                        </div>
+                        <span
+                            class="material-symbols-outlined doodle-float -bottom-8 -right-8 text-primary-teal text-4xl transform rotate-12">auto_awesome</span>
+                        <span
+                            class="material-symbols-outlined doodle-float top-0 -right-12 text-washi-pink text-5xl">heart_plus</span>
+                    </div>
+                </div>
+            </section>
+            <div class="max-w-[1200px] mx-auto px-6 py-20 relative">
+                <span
+                    class="material-symbols-outlined doodle-float top-40 -left-20 text-primary-teal text-6xl rotate-45">star</span>
+                <span
+                    class="material-symbols-outlined doodle-float bottom-20 -right-10 text-soft-peach text-8xl">wb_sunny</span>
+                <div class="flex flex-col md:flex-row items-center justify-between mb-16 gap-6">
+                    <div>
+                        <h2 class="text-4xl font-bold font-handwritten text-slate-800 flex items-center gap-3">
+                            Our Favorite Pages
+                            <span
+                                class="material-symbols-outlined text-primary-teal animate-bounce">rocket_launch</span>
+                        </h2>
+                        <p class="text-slate-500 font-script text-lg mt-2 italic">Flip through the chapters of our life
+                        </p>
+                    </div>
+                    <div class="flex bg-white p-2 rounded-2xl shadow-sm border-2 border-dashed border-primary-teal/20">
+                        <button
+                            class="px-6 py-2 rounded-xl bg-primary-teal text-white font-bold font-script text-lg">All</button>
+                        <button
+                            class="px-6 py-2 rounded-xl text-slate-500 font-bold font-script text-lg hover:text-primary-teal transition-colors">Trips</button>
+                        <button
+                            class="px-6 py-2 rounded-xl text-slate-500 font-bold font-script text-lg hover:text-primary-teal transition-colors">Dates</button>
+                        <button
+                            class="px-6 py-2 rounded-xl text-slate-500 font-bold font-script text-lg hover:text-primary-teal transition-colors">Us</button>
+                    </div>
+                </div>
+                <div class="columns-1 md:columns-2 lg:columns-3 gap-10 space-y-12 py-8">
+                    <div class="relative group inline-block w-full">
+                        <div class="polaroid-frame transform rotate-2 group-hover:rotate-0 transition-transform">
+                            <div class="washi-tape bg-washi-pink/60 -top-3 left-4 -rotate-12"></div>
+                            <img class="w-full h-auto object-cover grayscale-[20%] group-hover:grayscale-0 transition-all"
+                                data-alt="Golden hour photo"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCN_WS31jWQQahU8bjeX9vIGitTGK-eku36Y-LCiIT-_c-So_T74qiOqyNbXLgE4CZ2aAIfE-wuEkdfRqp-fTIM0kt2Y6Zix18Buyo5YTcAQXE8slPiv1OODeIZlUSwbp7brLaSEhwF6YCS8_QXTLVv2Omxfw6Czy7V8mGytlH_9Ol33ptpMi4KCv68OSkcQ-OnZD0PVP7kJTRg7dnsCIKwnYqSQboINxm2gNSiwbi5p9SCGNE9xbPHT9YxCuqZPbtaZ-qBTdf7CF60" />
+                            <div class="pt-4 px-2">
+                                <h3 class="font-handwritten text-xl font-bold text-slate-800">Tuscany Vibes</h3>
+                                <p class="font-script text-slate-500">Sept '23 - best pasta ever!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group inline-block w-full">
+                        <div class="polaroid-frame transform -rotate-3 group-hover:rotate-0 transition-transform">
+                            <div class="washi-tape bg-washi-green/60 -top-2 right-6 rotate-6"></div>
+                            <img class="w-full h-auto object-cover" data-alt="Romantic dinner"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHqxTEdBpklEaEEyx6QvxfRhkdWVWZd23pRHhPSA4vLpBZGwqnA44r4sX4sgQpLlVtWW_7fPXIfOhxqnko7Ke10VrFIHUbyUdJdqUGEheCRJgQtExUm0zvWwWBkiVJ0piveBP_0eRXDHzv6Pe759GmCYS3Zb6ZcWHoS2KdZB1yitFJJNx-HaC80kV5D7_79qePyzgCIBGSON7wY5chKqXnFcwARBbJZqgsWCMb0-0f6NbBYGU7Cdf4930GCFZ74tkWYYIQLdLfVbv6" />
+                            <div class="pt-4 px-2">
+                                <h3 class="font-handwritten text-xl font-bold text-slate-800">Our 1st Anniversary</h3>
+                                <p class="font-script text-slate-500">Still can't believe it's been a year</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group inline-block w-full">
+                        <div class="polaroid-frame transform rotate-1 group-hover:-rotate-1 transition-transform">
+                            <div class="washi-tape bg-washi-blue/60 -top-4 left-1/2 -translate-x-1/2 rotate-1"></div>
+                            <img class="w-full h-auto object-cover" data-alt="Mountain hike"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZhogChRH56wLCC_YswYtl3sTD0IW_2g22Hr8agl95Ncsycwv-PTLy08zSavASCj7aG_KVNxMwrxF9g9y2cgbMsUFmDEx2QsP0_IEL-Q406-W7vVmY-jBrvopRwxr9gXoYq9AeTsBKhMk5_TCpCubtovYhwDl4dpg-aEDJU4HvfEVHjuobbnzvWKGiXGMJWpcejim4TYei8_NQ_vqZrqa16rOkAuaeZ6A_-btq7vdlT9CCk6uWWjo7dJ-8-KJvJJPvyFa8xTvPdcly" />
+                            <div class="pt-4 px-2">
+                                <h3 class="font-handwritten text-xl font-bold text-slate-800">Mountain Air</h3>
+                                <p class="font-script text-slate-500">My legs still hurt thinking about this!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group inline-block w-full">
+                        <div class="polaroid-frame transform -rotate-2 group-hover:rotate-1 transition-transform">
+                            <div class="washi-tape bg-washi-pink/40 -top-4 right-1/4 rotate-45"></div>
+                            <img class="w-full h-auto object-cover" data-alt="Picnic"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdyZ9TzFSWwGnocj0tWeQY2M5c_r3HA0KsPqrwGhSzKn60IMSDH_CXB0P0bW6ZHOkUoEsp3BS7H7mcwOVn-OdnfejO5vHf3jpuBmv3WNz97D1-jmg9q8uVRHPzn0O1qPNy8YQFSYj5sCdlgVj1vRbMOoIaccR8EqDA2VA9DVMRqGjXQNIygjBrMUyKP1CrsTmXCPj3PuNDWI9Nz2LOyYo9-J-IUROENHljxmM7zUyLeWD9UL3AbIu8EoG4gDR9aMQbN8lK_tKwFYgZ" />
+                            <div class="pt-4 px-2">
+                                <h3 class="font-handwritten text-xl font-bold text-slate-800">Lazy Sundays</h3>
+                                <p class="font-script text-slate-500">Sun, snacks, and you.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group inline-block w-full">
+                        <div class="polaroid-frame transform rotate-4 group-hover:rotate-0 transition-transform">
+                            <div class="washi-tape bg-washi-green/50 -top-3 left-10 -rotate-3"></div>
+                            <img class="w-full h-auto object-cover" data-alt="Sunset ocean"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkMtdYuoBN8-eSyxgjviFHKyTRyNEHDSEdP9A4g_jEYJbmuiQ-1MLyB42gtLWFdiF7XbE3Xb0t8jeZPNPVBefVtvO8ebPTxaGoqAq_t70nS0QSuNVXIEgCgpNZ4vGkvWhHXgaT261ylTq0wdklc-i0cOB3kGWHk-eSU-uCJpZ-m-UMjcuWAtpOGOhMIEtaU0vJE6qX5CUxKYgC2ddoUqqBNvEE5Mxdlj1AJLp85k_1mf0ndnz8oDnqbozMuFiGMW4GPoN2xr8Z3Zp" />
+                            <div class="pt-4 px-2">
+                                <h3 class="font-handwritten text-xl font-bold text-slate-800">Bali Magic</h3>
+                                <p class="font-script text-slate-500">December dreams.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group inline-block w-full">
+                        <div class="polaroid-frame transform -rotate-1 group-hover:scale-105 transition-transform">
+                            <div class="washi-tape bg-washi-blue/50 -top-2 right-10 rotate-12"></div>
+                            <img class="w-full h-auto object-cover" data-alt="B&amp;W laugh"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHsc4valUDCJ3cq9fIEIvkDDqVtv08xp95m3q_maeZRvBYmNR1XD8VuR2xq_T30haRoDqGgv6uA-e4mKjlFT2-gEbwLYa8ZnQEZTZYdbnScE0291qXSypGJCoF5c94eO0GwgANEBu3bRwbeRVgDngzOcmk7XkLI_aVrcqJL2ZU72Ss2K6hrThRdDXjqZlgc6qHFsw-Y4w9YZ2dfgSt_ZyI1yvusYeNiNKGxkZ5UmfFh4uQdm7NPN8QTzcxq7fiBspRBoeqRMFpTq3v" />
+                            <div class="pt-4 px-2">
+                                <h3 class="font-handwritten text-xl font-bold text-slate-800">5 Years &amp; Counting
+                                </h3>
+                                <p class="font-script text-slate-500">Always laughing with you.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="bg-primary-teal/5 py-24 px-6 text-center border-y-2 border-dashed border-primary-teal/20 relative overflow-hidden">
+                <span
+                    class="material-symbols-outlined doodle-float top-10 left-1/4 text-primary-teal/20 text-9xl">favorite</span>
+                <div class="max-w-xl mx-auto relative z-10">
+                    <span class="material-symbols-outlined text-primary-teal text-6xl mb-6">menu_book</span>
+                    <h2 class="text-4xl font-bold font-handwritten mb-6 text-slate-800">Let's add more pages!</h2>
+                    <p class="text-slate-600 font-script text-xl mb-10 leading-relaxed">
+                        Every little thing we do is a masterpiece in my eyes. Ready to stick a new photo in our book?
+                    </p>
+                    <button
+                        class="bg-white border-2 border-primary-teal text-primary-teal font-bold py-4 px-12 rounded-2xl shadow-[6px_6px_0px_0px_#4fb3ad] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all flex items-center gap-3 mx-auto font-bubbly">
+                        <span class="material-symbols-outlined">add_circle</span>
+                        Add a New Memory
+                    </button>
+                </div>
+            </div>
+        </main>
+        <footer class="bg-white py-12 px-10 border-t-2 border-primary-teal/10">
+            <div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-2 text-primary-teal">
+                    <span class="material-symbols-outlined fill-1">favorite</span>
+                    <span class="font-handwritten font-bold text-2xl text-slate-800">our digital scrapbook</span>
+                </div>
+                <div class="flex gap-10 font-script text-lg">
+                    <a class="text-slate-500 hover:text-primary-teal transition-colors" href="#">Privacy</a>
+                    <a class="text-slate-500 hover:text-primary-teal transition-colors" href="#">Shared Access</a>
+                    <a class="text-slate-500 hover:text-primary-teal transition-colors" href="#">Settings</a>
+                </div>
+                <p class="text-slate-400 text-sm font-script">Made with lots of ❤️ in 2024</p>
+            </div>
+        </footer>
+    </div>
+
+</body>
+
+</html>
