@@ -10,7 +10,7 @@ const MenuBar = ({ clock }: MenuBarProps) => {
   return (
     <header className="menu-bar">
       <div className="menu-left">
-        <div className="apple-mark" aria-hidden="true">
+        <div className="logo" aria-hidden="true">
           <span />
         </div>
         <span className="menu-app-name">Portfolio</span>

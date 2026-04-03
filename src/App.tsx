@@ -2,23 +2,18 @@ import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "./App.css";
+import AboutMeWindow from "./components/AboutMeWindow";
 import DesktopShortcuts from "./components/DesktopShortcuts";
 import Dock from "./components/Dock";
 import FinderWindow from "./components/FinderWindow";
 import HeroSection from "./components/HeroSection";
 import MenuBar from "./components/MenuBar";
-
-const APPLE_DATE_FORMAT = new Intl.DateTimeFormat("en-US", {
-  weekday: "short",
-  month: "short",
-  day: "numeric",
-  hour: "numeric",
-  minute: "2-digit",
-});
+import { APPLE_DATE_FORMAT, CLOCK_UPDATE_INTERVAL } from "./constants/formatting";
+import { useClock } from "./hooks/useAnimations";
 
 const App = () => {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [clock, setClock] = useState(() => APPLE_DATE_FORMAT.format(new Date()));
+  const clock = useClock(APPLE_DATE_FORMAT, CLOCK_UPDATE_INTERVAL);
   const [activeAppId, setActiveAppId] = useState<string | null>(null);
   const [finderOrigin, setFinderOrigin] = useState<{
     left: number;
@@ -26,11 +21,20 @@ const App = () => {
     width: number;
     height: number;
   } | null>(null);
-  const [isFinderMounted, setIsFinderMounted] = useState(false);
   const [isFinderOpen, setIsFinderOpen] = useState(false);
+  const [aboutOrigin, setAboutOrigin] = useState<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  } | null>(null);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
 
-  const openFinder = () => {
-    setIsFinderMounted(true);
+  const openFinder = (origin?: { left: number; top: number; width: number; height: number }) => {
+    if (origin) {
+      setFinderOrigin(origin);
+    }
+    setIsAboutOpen(false);
     setIsFinderOpen(true);
   };
 
@@ -41,8 +45,17 @@ const App = () => {
     }
   };
 
-  const handleFinderClosed = () => {
-    setIsFinderMounted(false);
+  const openAbout = (origin?: { left: number; top: number; width: number; height: number }) => {
+    if (origin) {
+      setAboutOrigin(origin);
+    }
+    setIsFinderOpen(false);
+    setIsAboutOpen(true);
+  };
+
+  const closeAbout = () => {
+    setIsAboutOpen(false);
+    setActiveAppId((prev) => (prev === "about" ? null : prev));
   };
 
   const toggleApp = (
@@ -50,22 +63,24 @@ const App = () => {
     origin?: { left: number; top: number; width: number; height: number }
   ) => {
     if (appId === "projects") {
-      if (origin) {
-        setFinderOrigin(origin);
-      }
-
-      if (isFinderMounted && isFinderOpen) {
+      if (isFinderOpen) {
         closeFinder();
         return;
       }
 
-      // If Finder is currently animating closed, ignore repeated toggles.
-      if (isFinderMounted && !isFinderOpen) {
+      setActiveAppId("projects");
+      openFinder(origin);
+      return;
+    }
+
+    if (appId === "about") {
+      if (isAboutOpen) {
+        closeAbout();
         return;
       }
 
-      setActiveAppId("projects");
-      openFinder();
+      setActiveAppId("about");
+      openAbout(origin);
       return;
     }
 
@@ -89,14 +104,6 @@ const App = () => {
     { scope: rootRef }
   );
 
-  useGSAP(() => {
-    const timer = window.setInterval(() => {
-      setClock(APPLE_DATE_FORMAT.format(new Date()));
-    }, 1000 * 15);
-
-    return () => window.clearInterval(timer);
-  });
-
   return (
     <div className="mac-root" ref={rootRef}>
       <div className="wallpaper-layer" aria-hidden="true" />
@@ -105,16 +112,19 @@ const App = () => {
       <MenuBar clock={clock} />
 
       <main className="desktop-space">
-        {isFinderMounted ? (
-          <FinderWindow
-            isOpen={isFinderOpen}
-            origin={finderOrigin}
-            onClose={() => closeFinder()}
-            onClosed={handleFinderClosed}
-          />
-        ) : (
-          <HeroSection />
-        )}
+        <FinderWindow
+          isOpen={isFinderOpen}
+          origin={finderOrigin}
+          onClose={() => closeFinder()}
+          onClosed={() => { }}
+        />
+        <AboutMeWindow
+          isOpen={isAboutOpen}
+          origin={aboutOrigin}
+          onClose={() => closeAbout()}
+          onClosed={() => { }}
+        />
+        {!isFinderOpen && !isAboutOpen && <HeroSection />}
 
         <DesktopShortcuts />
       </main>

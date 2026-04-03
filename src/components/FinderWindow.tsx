@@ -5,8 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 
 import { finderFiles } from "../data/desktopData";
-
-const FINDER_VIEW_MODE_STORAGE_KEY = "mac-portfolio-finder-view-mode";
+import { FINDER_VIEW_MODE_STORAGE_KEY } from "../constants/formatting";
 
 type FinderWindowProps = {
   isOpen: boolean;
@@ -19,6 +18,8 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) 
   const finderRef = useRef<HTMLElement>(null);
   const shellRef = useRef<HTMLDivElement>(null);
   const snapPulseTimerRef = useRef<number | null>(null);
+  const originRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
+  const hasOpenedOnceRef = useRef(false);
   const wasClampedRef = useRef(false);
   const dragStateRef = useRef<{
     isDragging: boolean;
@@ -38,6 +39,11 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) 
   useEffect(() => {
     window.localStorage.setItem(FINDER_VIEW_MODE_STORAGE_KEY, viewMode);
   }, [viewMode]);
+  useEffect(() => {
+    if (origin) {
+      originRef.current = origin;
+    }
+  }, [origin]);
 
   const [shellPosition, setShellPosition] = useState(() => {
     if (typeof window === "undefined") {
@@ -156,25 +162,26 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) 
       const items = finder.querySelectorAll<HTMLElement>(".finder-window-item");
       const finderRect = finder.getBoundingClientRect();
 
-      const fallbackOrigin = {
-        left: finderRect.left + finderRect.width / 2,
-        top: finderRect.top + finderRect.height,
+      // Fallback to approximate dock position (bottom center)
+      const fallbackOrigin = originRef.current || {
+        left: window.innerWidth / 2,
+        top: window.innerHeight - 80,
         width: 72,
         height: 72,
       };
 
-      const source = origin ?? fallbackOrigin;
-      const sourceCenterX = source.left + source.width / 2;
-      const sourceCenterY = source.top + source.height / 2;
+      const sourceCenterX = fallbackOrigin.left + fallbackOrigin.width / 2;
+      const sourceCenterY = fallbackOrigin.top + fallbackOrigin.height / 2;
       const finderCenterX = finderRect.left + finderRect.width / 2;
       const finderCenterY = finderRect.top + finderRect.height / 2;
       const fromX = sourceCenterX - finderCenterX;
       const fromY = sourceCenterY - finderCenterY;
-      const fromScaleRaw = source.width / finderRect.width;
+      const fromScaleRaw = fallbackOrigin.width / finderRect.width;
       const fromScale = Math.min(Math.max(fromScaleRaw, 0.08), 0.32);
       gsap.set(finder, { transformOrigin: "50% 100%", transformPerspective: 900, force3D: true });
 
       if (isOpen) {
+        hasOpenedOnceRef.current = true;
         gsap.killTweensOf([finder, ...items]);
         gsap.fromTo(
           finder,
@@ -198,7 +205,7 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) 
             opacity: 1,
             filter: "blur(0px)",
             duration: 0.42,
-            ease: "power3.out",
+            ease: "expo.out",
           }
         );
 
@@ -214,6 +221,21 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) 
             ease: "power2.out",
           }
         );
+        return;
+      }
+
+      if (!hasOpenedOnceRef.current) {
+        gsap.killTweensOf([finder, ...items]);
+        gsap.set(finder, {
+          x: fromX,
+          y: fromY,
+          scaleX: fromScale * 0.76,
+          scaleY: fromScale * 1.1,
+          skewX: 30,
+          skewY: 30,
+          opacity: 0,
+          filter: "blur(6px)",
+        });
         return;
       }
 

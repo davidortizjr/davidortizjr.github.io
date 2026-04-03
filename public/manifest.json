@@ -1,0 +1,19 @@
+{
+    "name": "David Ortiz - Full Stack Developer",
+    "short_name": "David Ortiz",
+    "description": "Creative portfolio of David Ortiz, a Full Stack Developer specializing in React, TypeScript, and modern web technologies.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#1d1f31",
+    "theme_color": "#1d1f31",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
+}
