@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "./App.css";
@@ -8,12 +8,20 @@ import Dock from "./components/Dock";
 import FinderWindow from "./components/FinderWindow";
 import HeroSection from "./components/HeroSection";
 import MenuBar from "./components/MenuBar";
+import MobileIphoneShell from "./components/MobileIphoneShell";
 import { APPLE_DATE_FORMAT, CLOCK_UPDATE_INTERVAL } from "./constants/formatting";
 import { useClock } from "./hooks/useAnimations";
 
 const App = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const clock = useClock(APPLE_DATE_FORMAT, CLOCK_UPDATE_INTERVAL);
+  const [isPhoneViewport, setIsPhoneViewport] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return window.matchMedia("(max-width: 720px)").matches;
+  });
   const [activeAppId, setActiveAppId] = useState<string | null>(null);
   const [finderOrigin, setFinderOrigin] = useState<{
     left: number;
@@ -88,8 +96,33 @@ const App = () => {
     closeFinder(false);
   };
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 720px)");
+    const handleChange = () => {
+      setIsPhoneViewport(mediaQuery.matches);
+    };
+
+    handleChange();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
+
   useGSAP(
     () => {
+      if (isPhoneViewport) {
+        return;
+      }
+
       gsap.from(".menu-bar", { y: -18, opacity: 0, duration: 0.8, ease: "power3.out" });
       gsap.from(".desktop-icon", {
         x: 28,
@@ -101,8 +134,12 @@ const App = () => {
       });
       gsap.from(".dock", { y: 50, opacity: 0, duration: 0.8, delay: 0.4, ease: "power3.out" });
     },
-    { scope: rootRef }
+    { scope: rootRef, dependencies: [isPhoneViewport] }
   );
+
+  if (isPhoneViewport) {
+    return <MobileIphoneShell clock={clock} />;
+  }
 
   return (
     <div className="mac-root" ref={rootRef}>

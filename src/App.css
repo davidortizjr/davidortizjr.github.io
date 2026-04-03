@@ -935,6 +935,442 @@ body,
   transform: translateX(-50%) translateY(0);
 }
 
+.iphone-app {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, rgba(110, 166, 255, 0.4), transparent 40%),
+    radial-gradient(circle at 20% 20%, rgba(255, 126, 103, 0.26), transparent 34%),
+    linear-gradient(180deg, #101523 0%, #0a1020 52%, #050816 100%);
+  color: #f7fbff;
+}
+
+.iphone-wallpaper {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(104, 164, 255, 0.38), transparent 28%),
+    radial-gradient(circle at 80% 30%, rgba(120, 194, 123, 0.24), transparent 30%),
+    radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.08), transparent 34%);
+  filter: blur(18px);
+  opacity: 0.9;
+}
+
+.iphone-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 18px;
+}
+
+.iphone-device {
+  position: relative;
+  width: min(100vw - 18px, 430px);
+  height: min(100vh - 24px, 900px);
+  border-radius: 44px;
+  overflow: hidden;
+  border: 10px solid rgba(12, 18, 31, 0.72);
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.48),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  background: rgba(10, 14, 24, 0.55);
+  backdrop-filter: blur(26px) saturate(140%);
+}
+
+.iphone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  width: 160px;
+  height: 32px;
+  border-radius: 0 0 22px 22px;
+  transform: translateX(-50%);
+  background: #070b14;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.3);
+}
+
+.iphone-camera {
+  position: absolute;
+  top: 11px;
+  left: 24px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #7cb4ff, #111a31 70%);
+}
+
+.iphone-speaker {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 70px;
+  height: 7px;
+  border-radius: 999px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.iphone-status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px 0;
+  font-size: 12px;
+  font-weight: 560;
+  letter-spacing: 0.02em;
+  color: rgba(247, 251, 255, 0.95);
+}
+
+.iphone-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iphone-signal,
+.iphone-wifi {
+  display: inline-flex;
+  width: 18px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(210, 225, 255, 0.72));
+  opacity: 0.85;
+}
+
+.iphone-battery {
+  font-size: 11px;
+}
+
+.iphone-home {
+  position: relative;
+  height: 100%;
+  padding: 58px 20px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: filter 220ms ease, opacity 220ms ease, transform 220ms ease;
+}
+
+.iphone-home.is-dimmed {
+  opacity: 0.72;
+  filter: blur(2px);
+  transform: scale(0.985);
+}
+
+.iphone-hero {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  padding: 12px 6px 0;
+  text-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+.iphone-kicker {
+  margin: 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(209, 224, 255, 0.82);
+}
+
+.iphone-hero h1 {
+  margin: 0;
+  font-size: clamp(38px, 7vw, 48px);
+  line-height: 0.95;
+}
+
+.iphone-description {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(236, 243, 255, 0.86);
+}
+
+.iphone-app-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 10px;
+  padding: 8px 0 0;
+}
+
+.iphone-app-icon {
+  border: 0;
+  background: none;
+  color: inherit;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 0;
+}
+
+.iphone-app-icon-surface,
+.iphone-dock-icon-surface {
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.96);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--app-accent) 88%, white 12%), rgba(255, 255, 255, 0.1));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 12px 24px rgba(0, 0, 0, 0.22);
+}
+
+.iphone-app-icon-surface {
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+}
+
+.iphone-app-label {
+  max-width: 8ch;
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+  color: rgba(247, 251, 255, 0.92);
+}
+
+.iphone-dock {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: auto;
+  padding: 12px;
+  border-radius: 30px;
+  background: rgba(11, 18, 30, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(18px);
+}
+
+.iphone-dock-icon {
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+.iphone-dock-icon-surface {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto;
+  border-radius: 18px;
+}
+
+.iphone-dock-icon.is-active .iphone-dock-icon-surface {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 0 2px rgba(255, 255, 255, 0.15),
+    0 16px 28px rgba(0, 0, 0, 0.28);
+}
+
+.iphone-sheet {
+  position: absolute;
+  inset: 62px 12px 12px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  border-radius: 36px;
+  overflow: hidden;
+  background: rgba(12, 18, 32, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(26px) saturate(140%);
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.iphone-sheet.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.iphone-sheet-glass {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, rgba(120, 170, 255, 0.18), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+  pointer-events: none;
+}
+
+.iphone-sheet-header {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 16px 14px;
+}
+
+.iphone-sheet-kicker {
+  margin: 0 0 2px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(216, 229, 255, 0.72);
+}
+
+.iphone-sheet-header h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.iphone-sheet-back,
+.iphone-sheet-action {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 12px;
+  color: rgba(247, 251, 255, 0.96);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.iphone-sheet-body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  overflow: auto;
+  padding: 10px 16px 20px;
+}
+
+.iphone-card-stack,
+.iphone-about-panel,
+.iphone-contact-panel,
+.iphone-resume-panel,
+.iphone-files-panel,
+.iphone-trash-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.iphone-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.iphone-card-title,
+.iphone-card-subtitle {
+  margin: 0;
+}
+
+.iphone-card-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.iphone-card-subtitle {
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(222, 232, 255, 0.74);
+}
+
+.iphone-card-meta {
+  align-self: center;
+  font-size: 12px;
+  color: rgba(222, 232, 255, 0.82);
+}
+
+.iphone-about-panel,
+.iphone-resume-panel,
+.iphone-trash-panel {
+  padding: 14px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.iphone-about-panel p,
+.iphone-resume-panel p,
+.iphone-trash-panel p {
+  margin: 0;
+  line-height: 1.55;
+  color: rgba(239, 245, 255, 0.9);
+}
+
+.iphone-skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.iphone-skill-list span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.iphone-contact-panel {
+  gap: 10px;
+}
+
+.iphone-contact-link,
+.iphone-primary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f7fbff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.iphone-contact-link {
+  text-decoration: none;
+}
+
+.iphone-primary-action {
+  font: inherit;
+}
+
+.iphone-files-panel {
+  gap: 10px;
+}
+
+.iphone-folder-row {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.iphone-home-indicator {
+  width: 120px;
+  height: 5px;
+  margin: 10px auto 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
 @media (max-width: 1100px) {
   .desktop-space {
     padding: calc(var(--menu-height) + 16px) 12px 120px;
