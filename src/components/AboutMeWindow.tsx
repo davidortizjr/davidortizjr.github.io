@@ -228,9 +228,9 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onClosed }: AboutMeWindowProps
                 <div className="about-content">
                     <div className="about-intro">
                         <p>
-                            Hi! I'm David, a full stack developer passionate about building beautiful, functional digital experiences.
-                            With expertise in modern web technologies and a keen eye for design, I create solutions that combine
-                            aesthetics with performance.
+                            Hi! I'm David, a 21-year-old Full Stack Web Developer with a knack for building products that make
+                            a difference. My expertise spans both frontend and backend technologies, enabling me to
+                            craft comprehensive solutions from the ground up.
                         </p>
                     </div>
 
@@ -241,7 +241,7 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onClosed }: AboutMeWindowProps
                             </div>
                             <div className="skill-content">
                                 <h3>Development</h3>
-                                <p>React • TypeScript • Node.js • JavaScript • Python • Full Stack</p>
+                                <p>Full Stack • React • TypeScript • Node.js • JavaScript • PHP • Express.js • ASP.NET</p>
                             </div>
                         </div>
 
@@ -251,7 +251,7 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onClosed }: AboutMeWindowProps
                             </div>
                             <div className="skill-content">
                                 <h3>Design</h3>
-                                <p>UI/UX • Responsive Design • Animation • Figma • CSS</p>
+                                <p>UI/UX • Responsive Design • GSAP Animation • Figma • CSS • Tailwind • Bootstrap</p>
                             </div>
                         </div>
 
