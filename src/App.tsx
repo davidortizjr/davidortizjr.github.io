@@ -1,24 +1,44 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "./App.css";
-import AboutMeWindow from "./components/dock_windows/AboutMeWindow";
 import DesktopShortcuts from "./components/DesktopShortcuts";
 import Dock from "./components/Dock";
-import FileViewerWindow from "./components/FileViewerWindow";
-import FinderWindow from "./components/dock_windows/FinderWindow";
 import HeroSection from "./components/HeroSection";
 import MenuBar from "./components/MenuBar";
-import MobileIphoneShell from "./components/MobileIphoneShell";
-import ContactWindows from "./components/dock_windows/ContactWindows";
 import { APPLE_DATE_FORMAT, CLOCK_UPDATE_INTERVAL } from "./constants/formatting";
 import { useClock } from "./hooks/useAnimations";
+
+const loadFinderWindow = () => import("./components/dock_windows/FinderWindow");
+const loadAboutMeWindow = () => import("./components/dock_windows/AboutMeWindow");
+const loadContactWindows = () => import("./components/dock_windows/ContactWindows");
+const loadFileViewerWindow = () => import("./components/FileViewerWindow");
+const loadMobileIphoneShell = () => import("./components/MobileIphoneShell");
+
+const FinderWindow = lazy(loadFinderWindow);
+const AboutMeWindow = lazy(loadAboutMeWindow);
+const ContactWindows = lazy(loadContactWindows);
+const FileViewerWindow = lazy(loadFileViewerWindow);
+const MobileIphoneShell = lazy(loadMobileIphoneShell);
 
 type ViewerFile = {
   id: string;
   title: string;
   src: string;
   description: string;
+};
+
+type WindowOrigin = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+};
+
+type DockWindowId = "projects" | "about" | "contact";
+
+const isDockWindowId = (appId: string): appId is DockWindowId => {
+  return appId === "projects" || appId === "about" || appId === "contact";
 };
 
 const App = () => {
@@ -32,123 +52,64 @@ const App = () => {
     return window.matchMedia("(max-width: 720px)").matches;
   });
   const [activeAppId, setActiveAppId] = useState<string | null>(null);
-  const [finderOrigin, setFinderOrigin] = useState<{
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  } | null>(null);
-  const [isFinderOpen, setIsFinderOpen] = useState(false);
-  const [aboutOrigin, setAboutOrigin] = useState<{
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  } | null>(null);
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
-  const [contactOrigin, setContactOrigin] = useState<{
-    left: number;
-    top: number;
-    width: number;
-    height: number;
-  } | null>(null);
-  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [openDockWindow, setOpenDockWindow] = useState<DockWindowId | null>(null);
+  const [windowOrigins, setWindowOrigins] = useState<Record<DockWindowId, WindowOrigin | null>>({
+    projects: null,
+    about: null,
+    contact: null,
+  });
   const [viewerFile, setViewerFile] = useState<ViewerFile | null>(null);
 
-  const openFinder = (origin?: { left: number; top: number; width: number; height: number }) => {
-    if (origin) {
-      setFinderOrigin(origin);
+  const closeDockWindow = useCallback((windowId: DockWindowId, clearActiveState = true) => {
+    setOpenDockWindow((prev) => (prev === windowId ? null : prev));
+    if (clearActiveState) {
+      setActiveAppId((prev) => (prev === windowId ? null : prev));
     }
-    setIsAboutOpen(false);
-    setIsContactOpen(false);
-    setIsFinderOpen(true);
-  };
+  }, []);
 
-  const closeFinder = (clearProjectsState = true) => {
-    setIsFinderOpen(false);
-    if (clearProjectsState) {
-      setActiveAppId((prev) => (prev === "projects" ? null : prev));
-    }
-  };
-
-  const openAbout = (origin?: { left: number; top: number; width: number; height: number }) => {
-    if (origin) {
-      setAboutOrigin(origin);
-    }
-    setIsFinderOpen(false);
-    setIsContactOpen(false);
-    setIsAboutOpen(true);
-  };
-
-  const closeAbout = () => {
-    setIsAboutOpen(false);
-    setActiveAppId((prev) => (prev === "about" ? null : prev));
-  };
-
-  const openContact = (origin?: { left: number; top: number; width: number; height: number }) => {
-    if (origin) {
-      setContactOrigin(origin);
-    }
-    setIsFinderOpen(false);
-    setIsAboutOpen(false);
-    setIsContactOpen(true);
-  };
-
-  const closeContact = () => {
-    setIsContactOpen(false);
-    setActiveAppId((prev) => (prev === "contact" ? null : prev));
-  };
-
-  const openViewer = (file: ViewerFile) => {
+  const openViewer = useCallback((file: ViewerFile) => {
     setViewerFile(file);
-  };
+  }, []);
 
-  const closeViewer = () => {
+  const closeViewer = useCallback(() => {
     setViewerFile(null);
-  };
+  }, []);
 
-  const toggleApp = (
-    appId: string,
-    origin?: { left: number; top: number; width: number; height: number }
-  ) => {
-    if (appId === "projects") {
-      if (isFinderOpen) {
-        closeFinder();
+  const prefetchApp = useCallback((appId: string) => {
+    switch (appId) {
+      case "projects":
+        void loadFinderWindow();
         return;
-      }
-
-      setActiveAppId("projects");
-      openFinder(origin);
-      return;
+      case "about":
+        void loadAboutMeWindow();
+        return;
+      case "contact":
+        void loadContactWindows();
+        return;
+      default:
+        return;
     }
+  }, []);
 
-    if (appId === "about") {
-      if (isAboutOpen) {
-        closeAbout();
+  const toggleApp = useCallback((appId: string, origin?: WindowOrigin) => {
+    if (isDockWindowId(appId)) {
+      if (origin) {
+        setWindowOrigins((prev) => ({ ...prev, [appId]: origin }));
+      }
+
+      if (openDockWindow === appId) {
+        closeDockWindow(appId);
         return;
       }
 
-      setActiveAppId("about");
-      openAbout(origin);
-      return;
-    }
-
-    if (appId === "contact") {
-      if (isContactOpen) {
-        closeContact();
-        return;
-      }
-
-      setActiveAppId("contact");
-      openContact(origin);
+      setActiveAppId(appId);
+      setOpenDockWindow(appId);
       return;
     }
 
     setActiveAppId(appId);
-    closeFinder(false);
-    setIsAboutOpen(false);
-    setIsContactOpen(false);
-  };
+    setOpenDockWindow(null);
+  }, [closeDockWindow, openDockWindow]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -193,10 +154,10 @@ const App = () => {
 
   if (isPhoneViewport) {
     return (
-      <>
+      <Suspense fallback={null}>
         <MobileIphoneShell clock={clock} onOpenFile={openViewer} />
         <FileViewerWindow isOpen={Boolean(viewerFile)} file={viewerFile} onClose={closeViewer} />
-      </>
+      </Suspense>
     );
   }
 
@@ -208,32 +169,36 @@ const App = () => {
       <MenuBar clock={clock} />
 
       <main className="desktop-space">
-        <FinderWindow
-          isOpen={isFinderOpen}
-          origin={finderOrigin}
-          onClose={() => closeFinder()}
-          onClosed={() => { }}
-          onOpenFile={openViewer}
-        />
-        <AboutMeWindow
-          isOpen={isAboutOpen}
-          origin={aboutOrigin}
-          onClose={() => closeAbout()}
-          onClosed={() => { }}
-        />
-        <ContactWindows
-          isOpen={isContactOpen}
-          origin={contactOrigin}
-          onClose={() => closeContact()}
-          onClosed={() => { }}
-        />
-        {!isFinderOpen && !isAboutOpen && !isContactOpen && <HeroSection />}
+        <Suspense fallback={null}>
+          <FinderWindow
+            isOpen={openDockWindow === "projects"}
+            origin={windowOrigins.projects}
+            onClose={() => closeDockWindow("projects")}
+            onClosed={() => { }}
+            onOpenFile={openViewer}
+          />
+          <AboutMeWindow
+            isOpen={openDockWindow === "about"}
+            origin={windowOrigins.about}
+            onClose={() => closeDockWindow("about")}
+            onClosed={() => { }}
+          />
+          <ContactWindows
+            isOpen={openDockWindow === "contact"}
+            origin={windowOrigins.contact}
+            onClose={() => closeDockWindow("contact")}
+            onClosed={() => { }}
+          />
+        </Suspense>
+        {!openDockWindow && <HeroSection />}
 
         <DesktopShortcuts onOpenFile={openViewer} />
       </main>
 
-      <FileViewerWindow isOpen={Boolean(viewerFile)} file={viewerFile} onClose={closeViewer} />
-      <Dock activeAppId={activeAppId} onToggleApp={toggleApp} />
+      <Suspense fallback={null}>
+        <FileViewerWindow isOpen={Boolean(viewerFile)} file={viewerFile} onClose={closeViewer} />
+      </Suspense>
+      <Dock activeAppId={activeAppId} onToggleApp={toggleApp} onPrefetchApp={prefetchApp} />
     </div>
   );
 };

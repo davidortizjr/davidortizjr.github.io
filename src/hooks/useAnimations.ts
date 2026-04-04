@@ -11,16 +11,27 @@ export const useDockHoverAnimation = (dockRef: RefObject<HTMLDivElement | null>)
         }
 
         const icons = dock.querySelectorAll<HTMLElement>(".dock-item");
+        let frameId: number | null = null;
+        let pendingMouseX = 0;
+        let dockLeft = 0;
+        let iconCenters: number[] = [];
+
+        const recalculateDockMetrics = () => {
+            const dockRect = dock.getBoundingClientRect();
+            dockLeft = dockRect.left;
+            iconCenters = Array.from(icons).map((icon) => {
+                const { left, width } = icon.getBoundingClientRect();
+                return left - dockRect.left + width / 2;
+            });
+        };
 
         const animateIcons = (mouseX: number) => {
-            const { left } = dock.getBoundingClientRect();
+            const radius = 120;
 
-            icons.forEach((icon) => {
-                const { left: iconLeft, width } = icon.getBoundingClientRect();
-                const center = iconLeft - left + width / 2;
+            icons.forEach((icon, index) => {
+                const center = iconCenters[index];
                 const distance = Math.abs(mouseX - center);
                 const direction = mouseX >= center ? -1 : 1;
-                const radius = 120;
 
                 if (distance >= radius) {
                     gsap.to(icon, {
@@ -47,8 +58,24 @@ export const useDockHoverAnimation = (dockRef: RefObject<HTMLDivElement | null>)
         };
 
         const handleMouseMove = (event: MouseEvent) => {
-            const { left } = dock.getBoundingClientRect();
-            animateIcons(event.clientX - left);
+            pendingMouseX = event.clientX - dockLeft;
+
+            if (frameId !== null) {
+                return;
+            }
+
+            frameId = window.requestAnimationFrame(() => {
+                frameId = null;
+                animateIcons(pendingMouseX);
+            });
+        };
+
+        const handleMouseEnter = () => {
+            recalculateDockMetrics();
+        };
+
+        const handleResize = () => {
+            recalculateDockMetrics();
         };
 
         const resetIcons = () => {
@@ -63,12 +90,23 @@ export const useDockHoverAnimation = (dockRef: RefObject<HTMLDivElement | null>)
             });
         };
 
+        recalculateDockMetrics();
         dock.addEventListener("mousemove", handleMouseMove);
+        dock.addEventListener("mouseenter", handleMouseEnter);
         dock.addEventListener("mouseleave", resetIcons);
+        window.addEventListener("resize", handleResize);
 
         return () => {
             dock.removeEventListener("mousemove", handleMouseMove);
+            dock.removeEventListener("mouseenter", handleMouseEnter);
             dock.removeEventListener("mouseleave", resetIcons);
+            window.removeEventListener("resize", handleResize);
+
+            if (frameId !== null) {
+                window.cancelAnimationFrame(frameId);
+                frameId = null;
+            }
+
             resetIcons();
         };
     });
@@ -84,8 +122,21 @@ export const useTextLetterAnimation = (
             return () => { };
         }
 
-        const letters = container.querySelectorAll<HTMLElement>("span");
+        const letters = container.querySelectorAll<HTMLElement>(".hero-letter");
         const { min, max, default: base } = fontWeights;
+        let frameId: number | null = null;
+        let pendingMouseX = 0;
+        let letterCenters: number[] = [];
+        let containerLeft = 0;
+
+        const recalculateMetrics = () => {
+            const containerRect = container.getBoundingClientRect();
+            containerLeft = containerRect.left;
+            letterCenters = Array.from(letters).map((letter) => {
+                const { left, width } = letter.getBoundingClientRect();
+                return left - containerLeft + width / 2;
+            });
+        };
 
         const animateLetter = (letter: HTMLElement, weight: number, duration = 0.25) => {
             return gsap.to(letter, {
@@ -99,18 +150,26 @@ export const useTextLetterAnimation = (
         letters.forEach((letter) => {
             animateLetter(letter, base, 0);
         });
+        recalculateMetrics();
 
         const handleMouseMove = (event: MouseEvent) => {
-            const { left } = container.getBoundingClientRect();
-            const mouseX = event.clientX - left;
+            pendingMouseX = event.clientX - containerLeft;
 
-            letters.forEach((letter) => {
-                const { left: letterLeft, width } = letter.getBoundingClientRect();
-                const distance = Math.abs(mouseX - (letterLeft - left + width / 2));
-                const intensity = Math.exp(-(distance ** 2) / 2000);
-                const weight = Math.round(min + (max - min) * intensity);
+            if (frameId !== null) {
+                return;
+            }
 
-                animateLetter(letter, weight);
+            frameId = window.requestAnimationFrame(() => {
+                frameId = null;
+                const mouseX = pendingMouseX;
+
+                letters.forEach((letter, index) => {
+                    const distance = Math.abs(mouseX - letterCenters[index]);
+                    const intensity = Math.exp(-(distance ** 2) / 2000);
+                    const weight = Math.round(min + (max - min) * intensity);
+
+                    animateLetter(letter, weight);
+                });
             });
         };
 
@@ -120,12 +179,23 @@ export const useTextLetterAnimation = (
             });
         };
 
+        const handleResize = () => {
+            recalculateMetrics();
+        };
+
         container.addEventListener("mousemove", handleMouseMove);
         container.addEventListener("mouseleave", handleMouseLeave);
+        window.addEventListener("resize", handleResize);
 
         return () => {
             container.removeEventListener("mousemove", handleMouseMove);
             container.removeEventListener("mouseleave", handleMouseLeave);
+            window.removeEventListener("resize", handleResize);
+
+            if (frameId !== null) {
+                window.cancelAnimationFrame(frameId);
+                frameId = null;
+            }
         };
     });
 };

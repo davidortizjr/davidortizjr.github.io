@@ -11,6 +11,7 @@ type DockItemProps = {
         id: string,
         origin: { left: number; top: number; width: number; height: number }
     ) => void;
+    onPrefetch?: (id: string) => void;
 };
 
 const DockItem = ({
@@ -21,6 +22,7 @@ const DockItem = ({
     canOpen,
     accent,
     onToggle,
+    onPrefetch,
 }: DockItemProps) => {
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (!canOpen) return;
@@ -38,6 +40,8 @@ const DockItem = ({
             data-tooltip-id="dock-tooltip"
             data-tooltip-content={name}
             onClick={handleClick}
+            onMouseEnter={() => onPrefetch?.(id)}
+            onFocus={() => onPrefetch?.(id)}
             style={
                 isActive
                     ? ({

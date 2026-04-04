@@ -9,9 +9,10 @@ type DockProps = {
     appId: string,
     origin?: { left: number; top: number; width: number; height: number }
   ) => void;
+  onPrefetchApp?: (appId: string) => void;
 };
 
-const Dock = ({ activeAppId, onToggleApp }: DockProps) => {
+const Dock = ({ activeAppId, onToggleApp, onPrefetchApp }: DockProps) => {
   const dockRef = useRef<HTMLDivElement>(null);
 
   // Use custom hook for dock hover animation
@@ -30,6 +31,7 @@ const Dock = ({ activeAppId, onToggleApp }: DockProps) => {
             canOpen={canOpen}
             accent={accent}
             onToggle={onToggleApp}
+            onPrefetch={onPrefetchApp}
           />
         ))}
         <span className="dock-divider" aria-hidden="true" />
