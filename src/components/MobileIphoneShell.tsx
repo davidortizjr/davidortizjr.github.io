@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
     ArrowLeft,
     FileText,
@@ -27,7 +27,7 @@ type MobileIphoneShellProps = {
     onOpenFile?: (file: ViewerFile) => void;
 };
 
-type MobileAppId = "projects" | "about" | "contact" | "resume" | "files" | "trash";
+type MobileAppId = "projects" | "about" | "contact" | "cv" | "files" | "trash";
 
 type MobileApp = {
     id: MobileAppId;
@@ -40,15 +40,17 @@ const apps: MobileApp[] = [
     { id: "projects", label: "Projects", icon: FolderOpen, accent: "#4f86ff" },
     { id: "about", label: "About Me", icon: User, accent: "#62c3ff" },
     { id: "contact", label: "Contact", icon: MessageCircle, accent: "#7bc17b" },
-    { id: "resume", label: "Resume", icon: FileText, accent: "#e07a5f" },
+    { id: "cv", label: "CV", icon: FileText, accent: "#e07a5f" },
     { id: "files", label: "Files", icon: Grid2x2, accent: "#b792ff" },
     { id: "trash", label: "Trash", icon: Trash2, accent: "#b3b8c3" },
 ];
 
 const dockApps = apps.slice(0, 4);
+const primaryResumeFileId = "CV";
 
 const MobileIphoneShell = ({ clock, onOpenFile }: MobileIphoneShellProps) => {
     const [activeApp, setActiveApp] = useState<MobileAppId | null>(null);
+    const sheetRef = useRef<HTMLElement>(null);
 
     const activeAppMeta = useMemo(() => {
         return apps.find((app) => app.id === activeApp) ?? null;
@@ -59,11 +61,21 @@ const MobileIphoneShell = ({ clock, onOpenFile }: MobileIphoneShellProps) => {
     };
 
     const closeApp = () => {
+        const activeElement = document.activeElement;
+        const sheetElement = sheetRef.current;
+
+        if (activeElement instanceof HTMLElement && sheetElement?.contains(activeElement)) {
+            activeElement.blur();
+        }
+
         setActiveApp(null);
     };
 
     const openPdf = (fileId: string) => {
-        const file = finderFiles.find((entry) => entry.id === fileId);
+        const file =
+            finderFiles.find((entry) => entry.id === fileId) ??
+            finderFiles.find((entry) => entry.typeLabel === "PDF Document" && Boolean(entry.previewUrl));
+
         if (!file?.previewUrl || !onOpenFile) {
             return;
         }
@@ -144,7 +156,7 @@ const MobileIphoneShell = ({ clock, onOpenFile }: MobileIphoneShellProps) => {
                         </footer>
                     </main>
 
-                    <section className={`iphone-sheet${activeApp ? " is-open" : ""}`} aria-hidden={!activeApp}>
+                    <section ref={sheetRef} className={`iphone-sheet${activeApp ? " is-open" : ""}`} aria-hidden={!activeApp}>
                         <div className="iphone-sheet-glass" />
                         <div className="iphone-sheet-header">
                             <button type="button" className="iphone-sheet-back" onClick={closeApp} aria-label="Close app">
@@ -203,7 +215,7 @@ const MobileIphoneShell = ({ clock, onOpenFile }: MobileIphoneShellProps) => {
 
                             {activeApp === "contact" && (
                                 <div className="iphone-contact-panel">
-                                    <a href="mailto:hello@davidortiz.dev" className="iphone-contact-link">
+                                    <a href="mailto:davidgortizjr@gmail.com" className="iphone-contact-link">
                                         <Mail size={18} /> Email
                                     </a>
                                     <a href="https://github.com/davidortizjr" target="_blank" rel="noreferrer" className="iphone-contact-link">
@@ -215,19 +227,18 @@ const MobileIphoneShell = ({ clock, onOpenFile }: MobileIphoneShellProps) => {
                                 </div>
                             )}
 
-                            {activeApp === "resume" && (
+                            {activeApp === "cv" && (
                                 <div className="iphone-resume-panel">
-                                    <p>Résumé ready for mobile viewing.</p>
-                                    <button type="button" className="iphone-primary-action" onClick={() => openPdf("resume")}>
-                                        View resume PDF
+                                    <button type="button" className="iphone-primary-action" onClick={() => openPdf(primaryResumeFileId)}>
+                                        View CV PDF
                                     </button>
                                 </div>
                             )}
 
                             {activeApp === "files" && (
                                 <div className="iphone-files-panel">
-                                    <button type="button" className="iphone-folder-row" onClick={() => openPdf("resume")}>
-                                        Resume_2026.pdf
+                                    <button type="button" className="iphone-folder-row" onClick={() => openPdf(primaryResumeFileId)}>
+                                        CV.pdf
                                     </button>
                                     <button type="button" className="iphone-folder-row" onClick={() => openPdf("readme")}>
                                         README.pdf

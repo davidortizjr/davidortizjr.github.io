@@ -4,8 +4,8 @@ import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 
-import { finderFiles } from "../data/desktopData";
-import { FINDER_VIEW_MODE_STORAGE_KEY } from "../constants/formatting";
+import { finderFiles } from "../../data/desktopData";
+import { FINDER_VIEW_MODE_STORAGE_KEY } from "../../constants/formatting";
 
 type ViewerFile = {
   id: string;

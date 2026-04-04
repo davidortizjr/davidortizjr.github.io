@@ -29,27 +29,27 @@ const HeroSection = () => {
 
   useGSAP(
     () => {
-      const { heroKicker, heroTitle, heroActions } = ANIMATION_DURATIONS;
+      const { heroKicker, heroTitle } = ANIMATION_DURATIONS;
+      const kickerElement = kickerRef.current;
+      const titleElement = titleRef.current;
 
-      gsap.from(".hero-kicker", {
+      if (!kickerElement || !titleElement) {
+        return;
+      }
+
+      gsap.from(kickerElement, {
         opacity: 0,
         y: 18,
         duration: heroKicker.duration,
         ease: heroKicker.ease,
       });
-      gsap.from(".hero-title", {
+
+      gsap.from(titleElement, {
         opacity: 0,
         y: 20,
         duration: heroTitle.duration,
         delay: heroTitle.delay,
         ease: heroTitle.ease,
-      });
-      gsap.from(".hero-actions", {
-        opacity: 0,
-        y: 14,
-        duration: heroActions.duration,
-        delay: heroActions.delay,
-        ease: heroActions.ease,
       });
     },
     { scope: heroRef }

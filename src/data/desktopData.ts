@@ -47,7 +47,7 @@ export const dockApps: DockApp[] = [
 
 export const desktopIcons: DesktopShortcut[] = [
   { id: "portfolio", label: "Portfolio_v2", icon: Folder, tone: "blue" },
-  { id: "resume", label: "Resume.pdf", icon: FileText, tone: "red", previewUrl: "/resume.pdf" },
+  { id: "CV", label: "CV.pdf", icon: FileText, tone: "red", previewUrl: "/Ortiz_CV.pdf" },
   { id: "archive", label: "Assets.zip", icon: Folder, tone: "violet" },
 ];
 
@@ -87,25 +87,5 @@ export const finderFiles: FinderFile[] = [
     modified: "Mar 29, 3:47 PM",
     size: "186 MB",
     icon: FileText,
-  },
-  {
-    id: "CV",
-    name: "CV.pdf",
-    kind: "file",
-    typeLabel: "PDF Document",
-    modified: "Mar 26, 11:20 AM",
-    size: "920 KB",
-    icon: FileText,
-    previewUrl: "/Ortiz_CV.pdf",
-  },
-  {
-    id: "readme",
-    name: "README.pdf",
-    kind: "file",
-    typeLabel: "PDF Document",
-    modified: "Mar 21, 8:09 AM",
-    size: "2 KB",
-    icon: FileText,
-    previewUrl: "/readme.pdf",
-  },
+  }
 ];

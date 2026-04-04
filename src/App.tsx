@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "./App.css";
-import AboutMeWindow from "./components/AboutMeWindow";
+import AboutMeWindow from "./components/dock_windows/AboutMeWindow";
 import DesktopShortcuts from "./components/DesktopShortcuts";
 import Dock from "./components/Dock";
 import FileViewerWindow from "./components/FileViewerWindow";
-import FinderWindow from "./components/FinderWindow";
+import FinderWindow from "./components/dock_windows/FinderWindow";
 import HeroSection from "./components/HeroSection";
 import MenuBar from "./components/MenuBar";
 import MobileIphoneShell from "./components/MobileIphoneShell";
+import ContactWindows from "./components/dock_windows/ContactWindows";
 import { APPLE_DATE_FORMAT, CLOCK_UPDATE_INTERVAL } from "./constants/formatting";
 import { useClock } from "./hooks/useAnimations";
 
@@ -45,6 +46,13 @@ const App = () => {
     height: number;
   } | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [contactOrigin, setContactOrigin] = useState<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  } | null>(null);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const [viewerFile, setViewerFile] = useState<ViewerFile | null>(null);
 
   const openFinder = (origin?: { left: number; top: number; width: number; height: number }) => {
@@ -52,6 +60,7 @@ const App = () => {
       setFinderOrigin(origin);
     }
     setIsAboutOpen(false);
+    setIsContactOpen(false);
     setIsFinderOpen(true);
   };
 
@@ -67,12 +76,27 @@ const App = () => {
       setAboutOrigin(origin);
     }
     setIsFinderOpen(false);
+    setIsContactOpen(false);
     setIsAboutOpen(true);
   };
 
   const closeAbout = () => {
     setIsAboutOpen(false);
     setActiveAppId((prev) => (prev === "about" ? null : prev));
+  };
+
+  const openContact = (origin?: { left: number; top: number; width: number; height: number }) => {
+    if (origin) {
+      setContactOrigin(origin);
+    }
+    setIsFinderOpen(false);
+    setIsAboutOpen(false);
+    setIsContactOpen(true);
+  };
+
+  const closeContact = () => {
+    setIsContactOpen(false);
+    setActiveAppId((prev) => (prev === "contact" ? null : prev));
   };
 
   const openViewer = (file: ViewerFile) => {
@@ -109,8 +133,21 @@ const App = () => {
       return;
     }
 
+    if (appId === "contact") {
+      if (isContactOpen) {
+        closeContact();
+        return;
+      }
+
+      setActiveAppId("contact");
+      openContact(origin);
+      return;
+    }
+
     setActiveAppId(appId);
     closeFinder(false);
+    setIsAboutOpen(false);
+    setIsContactOpen(false);
   };
 
   useEffect(() => {
@@ -184,7 +221,13 @@ const App = () => {
           onClose={() => closeAbout()}
           onClosed={() => { }}
         />
-        {!isFinderOpen && !isAboutOpen && <HeroSection />}
+        <ContactWindows
+          isOpen={isContactOpen}
+          origin={contactOrigin}
+          onClose={() => closeContact()}
+          onClosed={() => { }}
+        />
+        {!isFinderOpen && !isAboutOpen && !isContactOpen && <HeroSection />}
 
         <DesktopShortcuts onOpenFile={openViewer} />
       </main>
