@@ -5,12 +5,20 @@ import "./App.css";
 import AboutMeWindow from "./components/AboutMeWindow";
 import DesktopShortcuts from "./components/DesktopShortcuts";
 import Dock from "./components/Dock";
+import FileViewerWindow from "./components/FileViewerWindow";
 import FinderWindow from "./components/FinderWindow";
 import HeroSection from "./components/HeroSection";
 import MenuBar from "./components/MenuBar";
 import MobileIphoneShell from "./components/MobileIphoneShell";
 import { APPLE_DATE_FORMAT, CLOCK_UPDATE_INTERVAL } from "./constants/formatting";
 import { useClock } from "./hooks/useAnimations";
+
+type ViewerFile = {
+  id: string;
+  title: string;
+  src: string;
+  description: string;
+};
 
 const App = () => {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -37,6 +45,7 @@ const App = () => {
     height: number;
   } | null>(null);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [viewerFile, setViewerFile] = useState<ViewerFile | null>(null);
 
   const openFinder = (origin?: { left: number; top: number; width: number; height: number }) => {
     if (origin) {
@@ -64,6 +73,14 @@ const App = () => {
   const closeAbout = () => {
     setIsAboutOpen(false);
     setActiveAppId((prev) => (prev === "about" ? null : prev));
+  };
+
+  const openViewer = (file: ViewerFile) => {
+    setViewerFile(file);
+  };
+
+  const closeViewer = () => {
+    setViewerFile(null);
   };
 
   const toggleApp = (
@@ -138,7 +155,12 @@ const App = () => {
   );
 
   if (isPhoneViewport) {
-    return <MobileIphoneShell clock={clock} />;
+    return (
+      <>
+        <MobileIphoneShell clock={clock} onOpenFile={openViewer} />
+        <FileViewerWindow isOpen={Boolean(viewerFile)} file={viewerFile} onClose={closeViewer} />
+      </>
+    );
   }
 
   return (
@@ -154,6 +176,7 @@ const App = () => {
           origin={finderOrigin}
           onClose={() => closeFinder()}
           onClosed={() => { }}
+          onOpenFile={openViewer}
         />
         <AboutMeWindow
           isOpen={isAboutOpen}
@@ -163,9 +186,10 @@ const App = () => {
         />
         {!isFinderOpen && !isAboutOpen && <HeroSection />}
 
-        <DesktopShortcuts />
+        <DesktopShortcuts onOpenFile={openViewer} />
       </main>
 
+      <FileViewerWindow isOpen={Boolean(viewerFile)} file={viewerFile} onClose={closeViewer} />
       <Dock activeAppId={activeAppId} onToggleApp={toggleApp} />
     </div>
   );

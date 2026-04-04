@@ -160,6 +160,10 @@ body,
   cursor: default;
 }
 
+.desktop-icon.is-clickable {
+  cursor: pointer;
+}
+
 .desktop-icon-tile {
   width: 58px;
   height: 58px;
@@ -580,6 +584,17 @@ body,
   background: rgba(255, 255, 255, 0.88);
   color: #2a3550;
   cursor: default;
+}
+
+.finder-file-row.is-clickable,
+.finder-icon-item.is-clickable {
+  cursor: pointer;
+}
+
+.finder-file-row:disabled,
+.finder-icon-item:disabled,
+.desktop-icon:disabled {
+  opacity: 0.74;
 }
 
 .finder-file-row:hover {
@@ -1362,6 +1377,103 @@ body,
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.file-viewer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(9, 13, 23, 0.45);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.file-viewer-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.file-viewer-window {
+  width: min(96vw, 1040px);
+  height: min(88vh, 860px);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 36px 90px rgba(5, 8, 16, 0.48);
+  background: rgba(248, 251, 255, 0.95);
+}
+
+.file-viewer-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  background: linear-gradient(180deg, rgba(240, 245, 253, 0.98), rgba(230, 237, 248, 0.96));
+  border-bottom: 1px solid rgba(140, 152, 184, 0.22);
+  color: #233049;
+}
+
+.file-viewer-header h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.file-viewer-kicker {
+  margin: 0 0 4px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #6c7994;
+}
+
+.file-viewer-subtitle {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #61708d;
+}
+
+.file-viewer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-viewer-action {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(140, 152, 184, 0.24);
+  background: rgba(255, 255, 255, 0.72);
+  color: #465573;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.file-viewer-action:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.file-viewer-body {
+  min-height: 0;
+  background: #dfe8f5;
+}
+
+.file-viewer-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #ffffff;
+}
+
 .iphone-home-indicator {
   width: 120px;
   height: 5px;
@@ -1495,5 +1607,23 @@ body,
 
   .finder-grid--icons {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .file-viewer-overlay {
+    padding: 10px;
+  }
+
+  .file-viewer-window {
+    width: 100%;
+    height: 92vh;
+    border-radius: 18px;
+  }
+
+  .file-viewer-header {
+    padding: 14px 14px 12px;
+  }
+
+  .file-viewer-header h2 {
+    font-size: 18px;
   }
 }

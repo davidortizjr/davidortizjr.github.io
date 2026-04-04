@@ -15,8 +15,16 @@ import {
 
 import { finderFiles } from "../data/desktopData";
 
+type ViewerFile = {
+    id: string;
+    title: string;
+    src: string;
+    description: string;
+};
+
 type MobileIphoneShellProps = {
     clock: string;
+    onOpenFile?: (file: ViewerFile) => void;
 };
 
 type MobileAppId = "projects" | "about" | "contact" | "resume" | "files" | "trash";
@@ -39,7 +47,7 @@ const apps: MobileApp[] = [
 
 const dockApps = apps.slice(0, 4);
 
-const MobileIphoneShell = ({ clock }: MobileIphoneShellProps) => {
+const MobileIphoneShell = ({ clock, onOpenFile }: MobileIphoneShellProps) => {
     const [activeApp, setActiveApp] = useState<MobileAppId | null>(null);
 
     const activeAppMeta = useMemo(() => {
@@ -52,6 +60,20 @@ const MobileIphoneShell = ({ clock }: MobileIphoneShellProps) => {
 
     const closeApp = () => {
         setActiveApp(null);
+    };
+
+    const openPdf = (fileId: string) => {
+        const file = finderFiles.find((entry) => entry.id === fileId);
+        if (!file?.previewUrl || !onOpenFile) {
+            return;
+        }
+
+        onOpenFile({
+            id: file.id,
+            title: file.name,
+            src: file.previewUrl,
+            description: file.typeLabel,
+        });
     };
 
     return (
@@ -196,7 +218,7 @@ const MobileIphoneShell = ({ clock }: MobileIphoneShellProps) => {
                             {activeApp === "resume" && (
                                 <div className="iphone-resume-panel">
                                     <p>Résumé ready for mobile viewing.</p>
-                                    <button type="button" className="iphone-primary-action">
+                                    <button type="button" className="iphone-primary-action" onClick={() => openPdf("resume")}>
                                         View resume PDF
                                     </button>
                                 </div>
@@ -204,9 +226,13 @@ const MobileIphoneShell = ({ clock }: MobileIphoneShellProps) => {
 
                             {activeApp === "files" && (
                                 <div className="iphone-files-panel">
-                                    <div className="iphone-folder-row">Projects archive</div>
+                                    <button type="button" className="iphone-folder-row" onClick={() => openPdf("resume")}>
+                                        Resume_2026.pdf
+                                    </button>
+                                    <button type="button" className="iphone-folder-row" onClick={() => openPdf("readme")}>
+                                        README.pdf
+                                    </button>
                                     <div className="iphone-folder-row">Assets package</div>
-                                    <div className="iphone-folder-row">Case study notes</div>
                                 </div>
                             )}
 

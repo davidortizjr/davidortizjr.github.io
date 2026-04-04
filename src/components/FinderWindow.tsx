@@ -7,14 +7,22 @@ import type { PointerEvent as ReactPointerEvent } from "react";
 import { finderFiles } from "../data/desktopData";
 import { FINDER_VIEW_MODE_STORAGE_KEY } from "../constants/formatting";
 
+type ViewerFile = {
+  id: string;
+  title: string;
+  src: string;
+  description: string;
+};
+
 type FinderWindowProps = {
   isOpen: boolean;
   origin?: { left: number; top: number; width: number; height: number } | null;
   onClose?: () => void;
   onClosed?: () => void;
+  onOpenFile?: (file: ViewerFile) => void;
 };
 
-const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) => {
+const FinderWindow = ({ isOpen, origin, onClose, onClosed, onOpenFile }: FinderWindowProps) => {
   const finderRef = useRef<HTMLElement>(null);
   const shellRef = useRef<HTMLDivElement>(null);
   const snapPulseTimerRef = useRef<number | null>(null);
@@ -44,6 +52,20 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) 
       originRef.current = origin;
     }
   }, [origin]);
+
+  const handleOpenFile = (fileId: string) => {
+    const file = finderFiles.find((entry) => entry.id === fileId);
+    if (!file?.previewUrl || !onOpenFile) {
+      return;
+    }
+
+    onOpenFile({
+      id: file.id,
+      title: file.name,
+      src: file.previewUrl,
+      description: file.typeLabel,
+    });
+  };
 
   const [shellPosition, setShellPosition] = useState(() => {
     if (typeof window === "undefined") {
@@ -378,9 +400,16 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) 
 
                 {finderFiles.map((file) => {
                   const Icon = file.icon;
+                  const canOpen = Boolean(file.previewUrl && onOpenFile);
 
                   return (
-                    <button key={file.id} type="button" className="finder-file-row finder-window-item">
+                    <button
+                      key={file.id}
+                      type="button"
+                      className={`finder-file-row finder-window-item${canOpen ? " is-clickable" : ""}`}
+                      onClick={() => handleOpenFile(file.id)}
+                      disabled={!canOpen}
+                    >
                       <span className="finder-file-name">
                         <span className={`finder-file-icon-wrap ${file.kind}`}>
                           <Icon size={14} className={`finder-file-icon ${file.kind}`} />
@@ -397,9 +426,16 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed }: FinderWindowProps) 
             ) : (
               finderFiles.map((file) => {
                 const Icon = file.icon;
+                const canOpen = Boolean(file.previewUrl && onOpenFile);
 
                 return (
-                  <button key={file.id} type="button" className="finder-icon-item finder-window-item">
+                  <button
+                    key={file.id}
+                    type="button"
+                    className={`finder-icon-item finder-window-item${canOpen ? " is-clickable" : ""}`}
+                    onClick={() => handleOpenFile(file.id)}
+                    disabled={!canOpen}
+                  >
                     <span className="finder-icon-tile">
                       <span className={`finder-icon-glyph-wrap ${file.kind}`}>
                         <Icon size={22} className={`finder-file-icon ${file.kind}`} />
