@@ -164,17 +164,6 @@ body,
   cursor: pointer;
 }
 
-.desktop-icon-tile {
-  width: 58px;
-  height: 58px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 24px rgba(5, 7, 16, 0.28);
-}
-
 .desktop-icon-glyph-wrap {
   width: 42px;
   height: 42px;
@@ -189,18 +178,6 @@ body,
 .desktop-icon-glyph {
   color: #f6fbff;
   filter: drop-shadow(0 2px 4px rgba(10, 14, 24, 0.28));
-}
-
-.desktop-icon-tile.blue {
-  color: #70bcff;
-}
-
-.desktop-icon-tile.red {
-  color: #ff7b8e;
-}
-
-.desktop-icon-tile.violet {
-  color: #b1a3ff;
 }
 
 .desktop-icon-label {
@@ -986,6 +963,68 @@ body,
   will-change: transform, opacity, filter;
 }
 
+.trash-window .contact-content {
+  gap: 14px;
+}
+
+.trash-list {
+  display: grid;
+  gap: 10px;
+}
+
+.trash-item {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(140, 152, 184, 0.16);
+  color: #233049;
+}
+
+.trash-item-icon,
+.trash-item-action {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+}
+
+.trash-item-icon {
+  background: linear-gradient(135deg, #d8deea, #b8c2d6);
+  color: #4a566f;
+}
+
+.trash-item-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.trash-item-copy strong {
+  font-size: 14px;
+  font-weight: 620;
+}
+
+.trash-item-copy span {
+  font-size: 12px;
+  color: #6a7694;
+}
+
+.trash-item-action {
+  border: 0;
+  background: rgba(79, 134, 255, 0.12);
+  color: #4f86ff;
+  cursor: pointer;
+}
+
+.trash-window-item {
+  will-change: transform, opacity, filter;
+}
+
 .dock-wrapper {
   position: fixed;
   left: 50%;
@@ -1017,13 +1056,8 @@ body,
   place-items: center;
   color: #2f3a55;
   text-decoration: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(216, 224, 241, 0.85));
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 4px 8px rgba(27, 36, 64, 0.24);
   cursor: pointer;
-}
-
-.dock-item.social {
-  color: #3f4f71;
 }
 
 .dock-icon-surface {
@@ -1062,8 +1096,12 @@ body,
 }
 
 .dock-icon-glyph {
+  width: 24px;
+  height: 24px;
+  display: block;
+  object-fit: contain;
   color: #f6fbff;
-  filter: drop-shadow(0 2px 4px rgba(12, 18, 32, 0.24));
+  filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(12, 18, 32, 0.24));
 }
 
 .dock-item.active {

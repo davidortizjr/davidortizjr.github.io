@@ -12,12 +12,14 @@ import { useClock } from "./hooks/useAnimations";
 const loadFinderWindow = () => import("./components/dock_windows/FinderWindow");
 const loadAboutMeWindow = () => import("./components/dock_windows/AboutMeWindow");
 const loadContactWindows = () => import("./components/dock_windows/ContactWindows");
+const loadTrashWindow = () => import("./components/dock_windows/TrashWindow");
 const loadFileViewerWindow = () => import("./components/FileViewerWindow");
 const loadMobileIphoneShell = () => import("./components/MobileIphoneShell");
 
 const FinderWindow = lazy(loadFinderWindow);
 const AboutMeWindow = lazy(loadAboutMeWindow);
 const ContactWindows = lazy(loadContactWindows);
+const TrashWindow = lazy(loadTrashWindow);
 const FileViewerWindow = lazy(loadFileViewerWindow);
 const MobileIphoneShell = lazy(loadMobileIphoneShell);
 
@@ -35,10 +37,10 @@ type WindowOrigin = {
   height: number;
 };
 
-type DockWindowId = "projects" | "about" | "contact";
+type DockWindowId = "projects" | "about" | "contact" | "trash";
 
 const isDockWindowId = (appId: string): appId is DockWindowId => {
-  return appId === "projects" || appId === "about" || appId === "contact";
+  return appId === "projects" || appId === "about" || appId === "contact" || appId === "trash";
 };
 
 const App = () => {
@@ -57,6 +59,7 @@ const App = () => {
     projects: null,
     about: null,
     contact: null,
+    trash: null,
   });
   const [viewerFile, setViewerFile] = useState<ViewerFile | null>(null);
 
@@ -85,6 +88,9 @@ const App = () => {
         return;
       case "contact":
         void loadContactWindows();
+        return;
+      case "trash":
+        void loadTrashWindow();
         return;
       default:
         return;
@@ -187,6 +193,12 @@ const App = () => {
             isOpen={openDockWindow === "contact"}
             origin={windowOrigins.contact}
             onClose={() => closeDockWindow("contact")}
+            onClosed={() => { }}
+          />
+          <TrashWindow
+            isOpen={openDockWindow === "trash"}
+            origin={windowOrigins.trash}
+            onClose={() => closeDockWindow("trash")}
             onClosed={() => { }}
           />
         </Suspense>

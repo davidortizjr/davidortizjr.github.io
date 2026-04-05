@@ -13,7 +13,7 @@ const MenuBar = ({ clock }: MenuBarProps) => {
         <div className="logo" aria-hidden="true">
           <span />
         </div>
-        <span className="menu-app-name">Portfolio</span>
+        <span className="menu-app-name">David's</span>
         {menuItems.map((item) => (
           <button className="menu-item" key={item} type="button">
             {item}

@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { logoGithub, logoLinkedin } from "ionicons/icons";
 import { dockApps } from "../data/desktopData";
 import DockItem from "./DockItem";
 import { useDockHoverAnimation } from "../hooks/useAnimations";
@@ -43,7 +44,7 @@ const Dock = ({ activeAppId, onToggleApp, onPrefetchApp }: DockProps) => {
           aria-label="GitHub profile"
         >
           <span className="dock-icon-surface dock-icon-surface-github">
-            <span className="dock-icon-glyph" />
+            <img className="dock-icon-glyph" src={logoGithub} alt="" aria-hidden="true" />
           </span>
           <span className="dock-tooltip">GitHub</span>
         </a>
@@ -55,7 +56,7 @@ const Dock = ({ activeAppId, onToggleApp, onPrefetchApp }: DockProps) => {
           aria-label="LinkedIn profile"
         >
           <span className="dock-icon-surface dock-icon-surface-linkedin">
-            <span className="dock-icon-glyph" />
+            <img className="dock-icon-glyph" src={logoLinkedin} alt="" aria-hidden="true" />
           </span>
           <span className="dock-tooltip">LinkedIn</span>
         </a>
