@@ -59,33 +59,60 @@ export const finderFiles: FinderFile[] = [
     typeLabel: "Folder",
     modified: "Today, 10:42 AM",
     size: "--",
-    icon: Folder,
+    icon: Folder
   },
   {
-    id: "fintech-dashboard",
-    name: "FinTech Dashboard.fig",
+    id: "GabayIsko",
+    name: "GabayIsko",
     kind: "file",
-    typeLabel: "Figma File",
+    typeLabel: "Sketch Document",
     modified: "Today, 9:18 AM",
     size: "4.8 MB",
-    icon: FileText,
+    icon: FileText
   },
   {
-    id: "luxe-mobile",
-    name: "Luxe Mobile App.sketch",
+    id: "TasteBuds",
+    name: "TasteBuds",
     kind: "file",
     typeLabel: "Sketch Document",
     modified: "Yesterday, 6:03 PM",
     size: "11.2 MB",
-    icon: FileText,
+    icon: FileText
   },
   {
-    id: "ecobrand-assets",
-    name: "EcoBrand_Assets.zip",
+    id: "Valorant-API",
+    name: "Valorant API",
     kind: "file",
     typeLabel: "ZIP Archive",
     modified: "Mar 29, 3:47 PM",
     size: "186 MB",
-    icon: FileText,
+    icon: FileText
+  },
+  {
+    id: "spiderman",
+    name: "SPIDER-MAN: ACROSS THE SPIDER-VERSE",
+    kind: "file",
+    typeLabel: "Sketch Document",
+    modified: "Today, 11:20 AM",
+    size: "7.5 MB",
+    icon: FileText
+  },
+  {
+    id: "Lift-MNL",
+    name: "Lift MNL",
+    kind: "file",
+    typeLabel: "Sketch Document",
+    modified: "Today, 11:20 AM",
+    size: "7.5 MB",
+    icon: FileText
+  },
+  {
+    id: "MVC-Framework",
+    name: "MVC Framework",
+    kind: "file",
+    typeLabel: "Sketch Document",
+    modified: "Today, 11:20 AM",
+    size: "7.5 MB",
+    icon: FileText
   }
 ];

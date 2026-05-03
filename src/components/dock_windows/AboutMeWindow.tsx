@@ -8,13 +8,15 @@ type AboutMeWindowProps = {
     isOpen: boolean;
     origin?: { left: number; top: number; width: number; height: number } | null;
     onClose?: () => void;
+    onMinimize?: () => void;
     onClosed?: () => void;
 };
 
-const AboutMeWindow = ({ isOpen, origin, onClose, onClosed }: AboutMeWindowProps) => {
+const AboutMeWindow = ({ isOpen, origin, onClose, onMinimize, onClosed }: AboutMeWindowProps) => {
     const aboutRef = useRef<HTMLElement>(null);
     const shellRef = useRef<HTMLDivElement>(null);
     const originRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
+    const restorePositionRef = useRef<{ x: number; y: number } | null>(null);
     const hasOpenedOnceRef = useRef(false);
     const dragStateRef = useRef<{
         isDragging: boolean;
@@ -28,6 +30,13 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onClosed }: AboutMeWindowProps
         }
         return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     });
+    const [isZoomed, setIsZoomed] = useState(false);
+
+    useEffect(() => {
+        if (!isOpen) {
+            setIsZoomed(false);
+        }
+    }, [isOpen]);
 
     // Update origin ref immediately when origin prop changes
     useEffect(() => {
@@ -60,6 +69,30 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onClosed }: AboutMeWindowProps
         dragStateRef.current.offsetY = event.clientY - shellPosition.y;
         shell.classList.add("is-dragging");
         windowElement.setPointerCapture(event.pointerId);
+    };
+
+    const handleMinimize = () => {
+        setIsZoomed(false);
+        onMinimize?.();
+    };
+
+    const handleZoomToggle = () => {
+        setIsZoomed((current) => {
+            const next = !current;
+            const viewportCenter = {
+                x: window.innerWidth / 2,
+                y: window.innerHeight / 2,
+            };
+
+            if (next) {
+                restorePositionRef.current = shellPosition;
+                setShellPosition(viewportCenter);
+            } else if (restorePositionRef.current) {
+                setShellPosition(restorePositionRef.current);
+            }
+
+            return next;
+        });
     };
 
     // Handle dragging with proper cleanup
@@ -207,17 +240,23 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onClosed }: AboutMeWindowProps
 
     return (
         <div
-            className={`about-shell${isOpen ? " is-open" : " is-closing"}`}
+            className={`about-shell${isOpen ? " is-open" : " is-closing"}${isZoomed ? " is-zoomed" : ""}`}
             ref={shellRef}
             style={{ left: `${shellPosition.x}px`, top: `${shellPosition.y}px` }}
             aria-label="About Me window"
         >
             <section className="about-window" ref={aboutRef}>
                 <div className="about-header" onPointerDown={handleWindowPointerDown}>
-                    <div className="traffic-lights" aria-hidden="true">
-                        <button type="button" className="traffic red" onClick={onClose} aria-label="Close window" />
-                        <span className="traffic yellow" />
-                        <span className="traffic green" />
+                    <div className="traffic-lights" role="group" aria-label="About window controls">
+                        <button type="button" className="traffic traffic-button red" onClick={onClose} aria-label="Close window">
+                            <span className="traffic-symbol" aria-hidden="true">×</span>
+                        </button>
+                        <button type="button" className="traffic traffic-button yellow" onClick={handleMinimize} aria-label="Minimize window">
+                            <span className="traffic-symbol" aria-hidden="true">−</span>
+                        </button>
+                        <button type="button" className="traffic traffic-button green" onClick={handleZoomToggle} aria-label={isZoomed ? "Restore window size" : "Zoom window"}>
+                            <span className="traffic-symbol" aria-hidden="true">+</span>
+                        </button>
                     </div>
                     <div className="about-header-content">
                         <h1>About Me</h1>

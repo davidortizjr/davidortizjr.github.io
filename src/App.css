@@ -273,6 +273,11 @@ body,
   touch-action: none;
 }
 
+.finder-shell.is-zoomed {
+  width: min(calc(100vw - 24px), 1120px);
+  height: min(calc(100vh - var(--menu-height) - 24px), 760px);
+}
+
 .finder-shell.snap-bounce {
   animation: finderSnapBounce 180ms ease-out;
 }
@@ -368,6 +373,52 @@ body,
   box-shadow: 0 1px 2px rgba(10, 13, 21, 0.35);
 }
 
+.traffic-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: rgba(40, 40, 40, 0.92);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(0, 0, 0, 0.08));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18), 0 1px 2px rgba(10, 13, 21, 0.35);
+}
+
+.traffic-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.traffic-button:hover::after,
+.traffic-button:focus-visible::after {
+  opacity: 1;
+}
+
+.traffic-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 2px;
+}
+
+.traffic-symbol {
+  position: relative;
+  z-index: 1;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(-0.5px);
+  transition: opacity 120ms ease;
+}
+
+.traffic-button:hover .traffic-symbol,
+.traffic-button:focus-visible .traffic-symbol {
+  opacity: 1;
+}
+
 .traffic.red {
   background: #ff5f57;
 }
@@ -378,6 +429,18 @@ body,
 
 .traffic.green {
   background: #27c840;
+}
+
+.traffic-button.red {
+  color: #5a1111;
+}
+
+.traffic-button.yellow {
+  color: #5a3a00;
+}
+
+.traffic-button.green {
+  color: #0d4f18;
 }
 
 .sidebar-section-label {
@@ -679,6 +742,11 @@ body,
   touch-action: none;
 }
 
+.about-shell.is-zoomed {
+  width: min(calc(100vw - 24px), 980px);
+  height: min(calc(100vh - var(--menu-height) - 24px), 720px);
+}
+
 .about-shell.is-dragging,
 .about-shell.is-dragging .about-window {
   cursor: grabbing;
@@ -824,6 +892,16 @@ body,
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
+}
+
+.contact-shell.is-zoomed {
+  width: min(calc(100vw - 24px), 920px);
+  height: min(calc(100vh - var(--menu-height) - 24px), 680px);
+}
+
+.trash-shell.is-zoomed {
+  width: min(calc(100vw - 24px), 920px);
+  height: min(calc(100vh - var(--menu-height) - 24px), 680px);
 }
 
 .contact-shell.is-dragging,

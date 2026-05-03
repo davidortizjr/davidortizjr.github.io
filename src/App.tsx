@@ -180,6 +180,7 @@ const App = () => {
             isOpen={openDockWindow === "projects"}
             origin={windowOrigins.projects}
             onClose={() => closeDockWindow("projects")}
+            onMinimize={() => closeDockWindow("projects", false)}
             onClosed={() => { }}
             onOpenFile={openViewer}
           />
@@ -187,18 +188,21 @@ const App = () => {
             isOpen={openDockWindow === "about"}
             origin={windowOrigins.about}
             onClose={() => closeDockWindow("about")}
+            onMinimize={() => closeDockWindow("about", false)}
             onClosed={() => { }}
           />
           <ContactWindows
             isOpen={openDockWindow === "contact"}
             origin={windowOrigins.contact}
             onClose={() => closeDockWindow("contact")}
+            onMinimize={() => closeDockWindow("contact", false)}
             onClosed={() => { }}
           />
           <TrashWindow
             isOpen={openDockWindow === "trash"}
             origin={windowOrigins.trash}
             onClose={() => closeDockWindow("trash")}
+            onMinimize={() => closeDockWindow("trash", false)}
             onClosed={() => { }}
           />
         </Suspense>

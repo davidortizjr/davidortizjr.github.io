@@ -7,6 +7,8 @@ import type { PointerEvent as ReactPointerEvent } from "react";
 import { finderFiles } from "../../data/desktopData";
 import { FINDER_VIEW_MODE_STORAGE_KEY } from "../../constants/formatting";
 
+type FinderSidebarSection = "all" | "projects" | "shared" | "icloud";
+
 type ViewerFile = {
   id: string;
   title: string;
@@ -18,15 +20,17 @@ type FinderWindowProps = {
   isOpen: boolean;
   origin?: { left: number; top: number; width: number; height: number } | null;
   onClose?: () => void;
+  onMinimize?: () => void;
   onClosed?: () => void;
   onOpenFile?: (file: ViewerFile) => void;
 };
 
-const FinderWindow = ({ isOpen, origin, onClose, onClosed, onOpenFile }: FinderWindowProps) => {
+const FinderWindow = ({ isOpen, origin, onClose, onMinimize, onClosed, onOpenFile }: FinderWindowProps) => {
   const finderRef = useRef<HTMLElement>(null);
   const shellRef = useRef<HTMLDivElement>(null);
   const snapPulseTimerRef = useRef<number | null>(null);
   const originRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
+  const restorePositionRef = useRef<{ x: number; y: number } | null>(null);
   const hasOpenedOnceRef = useRef(false);
   const wasClampedRef = useRef(false);
   const dragStateRef = useRef<{
@@ -43,6 +47,20 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed, onOpenFile }: FinderW
 
     return storedViewMode === "icons" ? "icons" : "details";
   });
+  const [sidebarSection, setSidebarSection] = useState<FinderSidebarSection>("all");
+
+  const visibleFiles = (() => {
+    switch (sidebarSection) {
+      case "shared":
+        return [...finderFiles].slice().reverse();
+      case "projects":
+        return finderFiles.filter((file) => file.kind === "file");
+      case "icloud":
+        return finderFiles.filter((file) => file.kind === "folder");
+      default:
+        return finderFiles;
+    }
+  })();
 
   useEffect(() => {
     window.localStorage.setItem(FINDER_VIEW_MODE_STORAGE_KEY, viewMode);
@@ -67,6 +85,30 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed, onOpenFile }: FinderW
     });
   };
 
+  const handleMinimize = () => {
+    setIsZoomed(false);
+    onMinimize?.();
+  };
+
+  const handleZoomToggle = () => {
+    setIsZoomed((current) => {
+      const next = !current;
+      const viewportCenter = {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+      };
+
+      if (next) {
+        restorePositionRef.current = shellPosition;
+        setShellPosition(viewportCenter);
+      } else if (restorePositionRef.current) {
+        setShellPosition(restorePositionRef.current);
+      }
+
+      return next;
+    });
+  };
+
   const [shellPosition, setShellPosition] = useState(() => {
     if (typeof window === "undefined") {
       return { x: 0, y: 0 };
@@ -74,9 +116,11 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed, onOpenFile }: FinderW
 
     return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
   });
+  const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
+      setIsZoomed(false);
       return;
     }
 
@@ -311,41 +355,47 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed, onOpenFile }: FinderW
 
   return (
     <div
-      className={`finder-shell${isOpen ? " is-open" : " is-closing"}`}
+      className={`finder-shell${isOpen ? " is-open" : " is-closing"}${isZoomed ? " is-zoomed" : ""}`}
       ref={shellRef}
       style={{ left: `${shellPosition.x}px`, top: `${shellPosition.y}px` }}
       aria-label="Projects Finder window"
     >
       <section className="finder-window" ref={finderRef}>
         <div className="finder-sidebar">
-          <div className="traffic-lights" aria-hidden="true">
-            <button type="button" className="traffic red" onClick={onClose} aria-label="Close Finder" />
-            <span className="traffic yellow" />
-            <span className="traffic green" />
+          <div className="traffic-lights" role="group" aria-label="Finder window controls">
+            <button type="button" className="traffic traffic-button red" onClick={onClose} aria-label="Close Finder">
+              <span className="traffic-symbol" aria-hidden="true">×</span>
+            </button>
+            <button type="button" className="traffic traffic-button yellow" onClick={handleMinimize} aria-label="Minimize Finder">
+              <span className="traffic-symbol" aria-hidden="true">−</span>
+            </button>
+            <button type="button" className="traffic traffic-button green" onClick={handleZoomToggle} aria-label={isZoomed ? "Restore Finder size" : "Zoom Finder"}>
+              <span className="traffic-symbol" aria-hidden="true">+</span>
+            </button>
           </div>
 
           <h3 className="sidebar-section-label">Favorites</h3>
           <nav className="sidebar-list" aria-label="Finder favorites">
-            <button type="button" className="sidebar-item active">
-              <span className="sidebar-icon-wrap active">
+            <button type="button" className={`sidebar-item${sidebarSection === "all" ? " active" : ""}`} onClick={() => setSidebarSection("all")}>
+              <span className={`sidebar-icon-wrap${sidebarSection === "all" ? " active" : ""}`}>
                 <FolderOpen size={14} />
               </span>
               All Files
             </button>
-            <button type="button" className="sidebar-item">
-              <span className="sidebar-icon-wrap">
-                <Clock3 size={14} />
-              </span>
-              Recent
-            </button>
-            <button type="button" className="sidebar-item">
-              <span className="sidebar-icon-wrap">
+            <button type="button" className={`sidebar-item${sidebarSection === "shared" ? " active" : ""}`} onClick={() => setSidebarSection("shared")}>
+              <span className={`sidebar-icon-wrap${sidebarSection === "shared" ? " active" : ""}`}>
                 <Users size={14} />
               </span>
               Shared
             </button>
-            <button type="button" className="sidebar-item">
-              <span className="sidebar-icon-wrap">
+            <button type="button" className={`sidebar-item${sidebarSection === "projects" ? " active" : ""}`} onClick={() => setSidebarSection("projects")}>
+              <span className={`sidebar-icon-wrap${sidebarSection === "projects" ? " active" : ""}`}>
+                <Clock3 size={14} />
+              </span>
+              Projects
+            </button>
+            <button type="button" className={`sidebar-item${sidebarSection === "icloud" ? " active" : ""}`} onClick={() => setSidebarSection("icloud")}>
+              <span className={`sidebar-icon-wrap${sidebarSection === "icloud" ? " active" : ""}`}>
                 <Cloud size={14} />
               </span>
               iCloud Drive
@@ -398,7 +448,7 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed, onOpenFile }: FinderW
                   <span>Size</span>
                 </div>
 
-                {finderFiles.map((file) => {
+                {visibleFiles.map((file) => {
                   const Icon = file.icon;
                   const canOpen = Boolean(file.previewUrl && onOpenFile);
 
@@ -424,7 +474,7 @@ const FinderWindow = ({ isOpen, origin, onClose, onClosed, onOpenFile }: FinderW
                 })}
               </>
             ) : (
-              finderFiles.map((file) => {
+              visibleFiles.map((file) => {
                 const Icon = file.icon;
                 const canOpen = Boolean(file.previewUrl && onOpenFile);
 
