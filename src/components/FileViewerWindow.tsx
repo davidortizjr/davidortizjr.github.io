@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Download, X } from "lucide-react";
+import { ExternalLink, X } from "lucide-react";
 
 type ViewerFile = {
     id: string;
@@ -41,14 +41,14 @@ const FileViewerWindow = ({ isOpen, file, onClose }: FileViewerWindowProps) => {
             <section className="file-viewer-window" ref={viewerRef} aria-label={file.title}>
                 <header className="file-viewer-header">
                     <div>
-                        <p className="file-viewer-kicker">PDF Viewer</p>
+                        <p className="file-viewer-kicker">Website Preview</p>
                         <h2>{file.title}</h2>
                         <p className="file-viewer-subtitle">{file.description}</p>
                     </div>
 
                     <div className="file-viewer-actions">
-                        <a className="file-viewer-action" href={file.src} target="_blank" rel="noreferrer" aria-label={`Download ${file.title}`}>
-                            <Download size={16} />
+                        <a className="file-viewer-action" href={file.src} target="_blank" rel="noreferrer" aria-label={`Open ${file.title} in a new tab`}>
+                            <ExternalLink size={16} />
                         </a>
                         <button type="button" className="file-viewer-action" onClick={onClose} aria-label="Close viewer">
                             <X size={16} />

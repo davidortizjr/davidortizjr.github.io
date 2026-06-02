@@ -1,16 +1,24 @@
-import { useEffect, useState } from "react";
-import type { RefObject } from "react";
+import { useEffect, useState, type RefObject } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+
+const DOCK_ANIMATION_CONFIG = {
+    RADIUS: 120,
+    SCALE_INTENSITY: 0.42,
+    Y_INTENSITY: 16,
+    X_INTENSITY: 6,
+    DURATION: 0.2,
+    RESET_DURATION: 0.3,
+} as const;
 
 export const useDockHoverAnimation = (dockRef: RefObject<HTMLDivElement | null>): void => {
     useGSAP(() => {
         const dock = dockRef.current;
-        if (!dock) {
-            return;
-        }
+        if (!dock) return;
 
         const icons = dock.querySelectorAll<HTMLElement>(".dock-item");
+        if (!icons.length) return;
+
         let frameId: number | null = null;
         let pendingMouseX = 0;
         let dockLeft = 0;
@@ -25,33 +33,39 @@ export const useDockHoverAnimation = (dockRef: RefObject<HTMLDivElement | null>)
             });
         };
 
-        const animateIcons = (mouseX: number) => {
-            const radius = 120;
+        const resetIcon = (icon: HTMLElement) => {
+            gsap.to(icon, {
+                scale: 1,
+                y: 0,
+                x: 0,
+                duration: DOCK_ANIMATION_CONFIG.RESET_DURATION,
+                ease: "power1.out",
+            });
+        };
 
+        const animateIcons = (mouseX: number) => {
             icons.forEach((icon, index) => {
                 const center = iconCenters[index];
-                const distance = Math.abs(mouseX - center);
-                const direction = mouseX >= center ? -1 : 1;
+                if (center === undefined) return;
 
-                if (distance >= radius) {
-                    gsap.to(icon, {
-                        scale: 1,
-                        y: 0,
-                        x: 0,
-                        duration: 0.2,
-                        ease: "power1.out",
-                    });
+                const distance = Math.abs(mouseX - center);
+                const { RADIUS, SCALE_INTENSITY, Y_INTENSITY, X_INTENSITY, DURATION } =
+                    DOCK_ANIMATION_CONFIG;
+
+                if (distance >= RADIUS) {
+                    resetIcon(icon);
                     return;
                 }
 
-                const normalized = distance / radius;
-                const intensity = Math.exp(-((normalized * radius) ** 2.5) / 6200);
+                const normalized = distance / RADIUS;
+                const intensity = Math.exp(-((normalized * RADIUS) ** 2.5) / 6200);
+                const direction = mouseX >= center ? -1 : 1;
 
                 gsap.to(icon, {
-                    scale: 1 + 0.42 * intensity,
-                    y: -16 * intensity,
-                    x: direction * 6 * intensity,
-                    duration: 0.2,
+                    scale: 1 + SCALE_INTENSITY * intensity,
+                    y: -Y_INTENSITY * intensity,
+                    x: direction * X_INTENSITY * intensity,
+                    duration: DURATION,
                     ease: "power1.out",
                 });
             });
@@ -60,9 +74,7 @@ export const useDockHoverAnimation = (dockRef: RefObject<HTMLDivElement | null>)
         const handleMouseMove = (event: MouseEvent) => {
             pendingMouseX = event.clientX - dockLeft;
 
-            if (frameId !== null) {
-                return;
-            }
+            if (frameId !== null) return;
 
             frameId = window.requestAnimationFrame(() => {
                 frameId = null;
@@ -70,47 +82,41 @@ export const useDockHoverAnimation = (dockRef: RefObject<HTMLDivElement | null>)
             });
         };
 
-        const handleMouseEnter = () => {
-            recalculateDockMetrics();
+        const handleMouseLeave = () => {
+            icons.forEach(resetIcon);
         };
 
         const handleResize = () => {
             recalculateDockMetrics();
         };
 
-        const resetIcons = () => {
-            icons.forEach((icon) => {
-                gsap.to(icon, {
-                    scale: 1,
-                    y: 0,
-                    x: 0,
-                    duration: 0.3,
-                    ease: "power1.out",
-                });
-            });
-        };
-
+        // Initialize
         recalculateDockMetrics();
         dock.addEventListener("mousemove", handleMouseMove);
-        dock.addEventListener("mouseenter", handleMouseEnter);
-        dock.addEventListener("mouseleave", resetIcons);
+        dock.addEventListener("mouseleave", handleMouseLeave);
         window.addEventListener("resize", handleResize);
 
         return () => {
-            dock.removeEventListener("mousemove", handleMouseMove);
-            dock.removeEventListener("mouseenter", handleMouseEnter);
-            dock.removeEventListener("mouseleave", resetIcons);
-            window.removeEventListener("resize", handleResize);
-
             if (frameId !== null) {
                 window.cancelAnimationFrame(frameId);
-                frameId = null;
             }
 
-            resetIcons();
+            dock.removeEventListener("mousemove", handleMouseMove);
+            dock.removeEventListener("mouseleave", handleMouseLeave);
+            window.removeEventListener("resize", handleResize);
+
+            // Kill all GSAP animations on these elements
+            icons.forEach((icon) => gsap.killTweensOf(icon));
+            handleMouseLeave(); // Reset to default state
         };
     });
 };
+
+const TEXT_ANIMATION_CONFIG = {
+    INTENSITY_DIVISOR: 2000,
+    DURATION: 0.25,
+    RESET_DURATION: 0.3,
+} as const;
 
 export const useTextLetterAnimation = (
     containerRef: RefObject<HTMLParagraphElement | HTMLHeadingElement | null>,
@@ -118,12 +124,12 @@ export const useTextLetterAnimation = (
 ): void => {
     useGSAP(() => {
         const container = containerRef.current;
-        if (!container) {
-            return () => { };
-        }
+        if (!container) return;
 
         const letters = container.querySelectorAll<HTMLElement>(".hero-letter");
-        const { min, max, default: base } = fontWeights;
+        if (!letters.length) return;
+
+        const { min, max, default: baseWeight } = fontWeights;
         let frameId: number | null = null;
         let pendingMouseX = 0;
         let letterCenters: number[] = [];
@@ -138,8 +144,12 @@ export const useTextLetterAnimation = (
             });
         };
 
-        const animateLetter = (letter: HTMLElement, weight: number, duration = 0.25) => {
-            return gsap.to(letter, {
+        const animateLetter = (
+            letter: HTMLElement,
+            weight: number,
+            duration: number = TEXT_ANIMATION_CONFIG.DURATION
+        ) => {
+            gsap.to(letter, {
                 duration,
                 ease: "power2.out",
                 fontVariationSettings: `'wght' ${weight}`,
@@ -147,25 +157,23 @@ export const useTextLetterAnimation = (
             });
         };
 
-        letters.forEach((letter) => {
-            animateLetter(letter, base, 0);
-        });
-        recalculateMetrics();
+        const resetLetters = () => {
+            letters.forEach((letter) => {
+                animateLetter(letter, baseWeight, TEXT_ANIMATION_CONFIG.RESET_DURATION);
+            });
+        };
 
         const handleMouseMove = (event: MouseEvent) => {
             pendingMouseX = event.clientX - containerLeft;
 
-            if (frameId !== null) {
-                return;
-            }
+            if (frameId !== null) return;
 
             frameId = window.requestAnimationFrame(() => {
                 frameId = null;
-                const mouseX = pendingMouseX;
 
                 letters.forEach((letter, index) => {
-                    const distance = Math.abs(mouseX - letterCenters[index]);
-                    const intensity = Math.exp(-(distance ** 2) / 2000);
+                    const distance = Math.abs(pendingMouseX - letterCenters[index]);
+                    const intensity = Math.exp(-(distance ** 2) / TEXT_ANIMATION_CONFIG.INTENSITY_DIVISOR);
                     const weight = Math.round(min + (max - min) * intensity);
 
                     animateLetter(letter, weight);
@@ -173,29 +181,29 @@ export const useTextLetterAnimation = (
             });
         };
 
-        const handleMouseLeave = () => {
-            letters.forEach((letter) => {
-                animateLetter(letter, base, 0.3);
-            });
-        };
-
         const handleResize = () => {
             recalculateMetrics();
         };
 
+        // Initialize
+        recalculateMetrics();
+
         container.addEventListener("mousemove", handleMouseMove);
-        container.addEventListener("mouseleave", handleMouseLeave);
+        container.addEventListener("mouseleave", resetLetters);
         window.addEventListener("resize", handleResize);
 
         return () => {
-            container.removeEventListener("mousemove", handleMouseMove);
-            container.removeEventListener("mouseleave", handleMouseLeave);
-            window.removeEventListener("resize", handleResize);
-
             if (frameId !== null) {
                 window.cancelAnimationFrame(frameId);
-                frameId = null;
             }
+
+            container.removeEventListener("mousemove", handleMouseMove);
+            container.removeEventListener("mouseleave", resetLetters);
+            window.removeEventListener("resize", handleResize);
+
+            // Kill all GSAP animations on these elements
+            letters.forEach((letter) => gsap.killTweensOf(letter));
+            resetLetters();
         };
     });
 };

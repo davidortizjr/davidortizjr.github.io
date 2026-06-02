@@ -13,7 +13,7 @@ import {
     Zap,
 } from "lucide-react";
 
-import { finderFiles } from "../data/desktopData";
+import { desktopIcons, finderFiles } from "../data/desktopData";
 
 type ViewerFile = {
     id: string;
@@ -72,9 +72,7 @@ const MobileIphoneShell = ({ clock, onOpenFile }: MobileIphoneShellProps) => {
     };
 
     const openPdf = (fileId: string) => {
-        const file =
-            finderFiles.find((entry) => entry.id === fileId) ??
-            finderFiles.find((entry) => entry.typeLabel === "PDF Document" && Boolean(entry.previewUrl));
+        const file = desktopIcons.find((entry) => entry.id === fileId) ?? finderFiles.find((entry) => entry.id === fileId);
 
         if (!file?.previewUrl || !onOpenFile) {
             return;
@@ -82,9 +80,9 @@ const MobileIphoneShell = ({ clock, onOpenFile }: MobileIphoneShellProps) => {
 
         onOpenFile({
             id: file.id,
-            title: file.name,
+            title: "label" in file ? file.label : file.name,
             src: file.previewUrl,
-            description: file.typeLabel,
+            description: "label" in file ? "PDF Document" : file.typeLabel,
         });
     };
 

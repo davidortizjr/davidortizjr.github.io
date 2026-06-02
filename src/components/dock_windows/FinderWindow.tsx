@@ -54,9 +54,9 @@ const FinderWindow = ({ isOpen, origin, onClose, onMinimize, onClosed, onOpenFil
       case "shared":
         return [...finderFiles].slice().reverse();
       case "projects":
-        return finderFiles.filter((file) => file.kind === "file");
+        return finderFiles.filter((file) => file.kind === "page");
       case "icloud":
-        return finderFiles.filter((file) => file.kind === "folder");
+        return finderFiles.filter((file) => file.kind === "page");
       default:
         return finderFiles;
     }
@@ -358,7 +358,7 @@ const FinderWindow = ({ isOpen, origin, onClose, onMinimize, onClosed, onOpenFil
       className={`finder-shell${isOpen ? " is-open" : " is-closing"}${isZoomed ? " is-zoomed" : ""}`}
       ref={shellRef}
       style={{ left: `${shellPosition.x}px`, top: `${shellPosition.y}px` }}
-      aria-label="Projects Finder window"
+      aria-label="Web Pages Finder window"
     >
       <section className="finder-window" ref={finderRef}>
         <div className="finder-sidebar">
@@ -380,38 +380,38 @@ const FinderWindow = ({ isOpen, origin, onClose, onMinimize, onClosed, onOpenFil
               <span className={`sidebar-icon-wrap${sidebarSection === "all" ? " active" : ""}`}>
                 <FolderOpen size={14} />
               </span>
-              All Files
+              All Pages
             </button>
             <button type="button" className={`sidebar-item${sidebarSection === "shared" ? " active" : ""}`} onClick={() => setSidebarSection("shared")}>
               <span className={`sidebar-icon-wrap${sidebarSection === "shared" ? " active" : ""}`}>
                 <Users size={14} />
               </span>
-              Shared
+              Recent
             </button>
             <button type="button" className={`sidebar-item${sidebarSection === "projects" ? " active" : ""}`} onClick={() => setSidebarSection("projects")}>
               <span className={`sidebar-icon-wrap${sidebarSection === "projects" ? " active" : ""}`}>
                 <Clock3 size={14} />
               </span>
-              Projects
+              Websites
             </button>
             <button type="button" className={`sidebar-item${sidebarSection === "icloud" ? " active" : ""}`} onClick={() => setSidebarSection("icloud")}>
               <span className={`sidebar-icon-wrap${sidebarSection === "icloud" ? " active" : ""}`}>
                 <Cloud size={14} />
               </span>
-              iCloud Drive
+              Live
             </button>
           </nav>
 
           <h3 className="sidebar-section-label">Tags</h3>
           <div className="tag-list">
             <span className="tag-item">
-              <i className="tag-dot red" /> Red
+              <i className="tag-dot red" /> Static
             </span>
             <span className="tag-item">
-              <i className="tag-dot orange" /> Work
+              <i className="tag-dot orange" /> Frontend
             </span>
             <span className="tag-item">
-              <i className="tag-dot blue" /> Personal
+              <i className="tag-dot blue" /> Live Preview
             </span>
           </div>
         </div>
@@ -420,11 +420,11 @@ const FinderWindow = ({ isOpen, origin, onClose, onMinimize, onClosed, onOpenFil
           <header className="finder-header">
             <div className="finder-drag-area" onPointerDown={handleWindowPointerDown} aria-hidden="true" />
             <div>
-              <h1>Projects</h1>
-              <p>Creative works and case studies</p>
+              <h1>Web Pages</h1>
+              <p>Live previews for the sites in data/files</p>
             </div>
             <div className="finder-header-actions">
-              <button type="button" className="header-icon-btn" aria-label="Search projects">
+              <button type="button" className="header-icon-btn" aria-label="Search pages">
                 <Search size={16} />
               </button>
               <button
@@ -443,7 +443,7 @@ const FinderWindow = ({ isOpen, origin, onClose, onMinimize, onClosed, onOpenFil
               <>
                 <div className="finder-file-header finder-window-item" role="row">
                   <span>Name</span>
-                  <span>Type</span>
+                  <span>Kind</span>
                   <span>Date Modified</span>
                   <span>Size</span>
                 </div>
@@ -461,10 +461,13 @@ const FinderWindow = ({ isOpen, origin, onClose, onMinimize, onClosed, onOpenFil
                       disabled={!canOpen}
                     >
                       <span className="finder-file-name">
-                        <span className={`finder-file-icon-wrap ${file.kind}`}>
-                          <Icon size={14} className={`finder-file-icon ${file.kind}`} />
+                        <span className="finder-file-name-main">
+                          <span className={`finder-file-icon-wrap ${file.kind}`}>
+                            <Icon size={14} className={`finder-file-icon ${file.kind}`} />
+                          </span>
+                          <span className="finder-file-name-copy">{file.name}</span>
                         </span>
-                        {file.name}
+                        <span className="finder-file-path">{file.path}</span>
                       </span>
                       <span>{file.typeLabel}</span>
                       <span>{file.modified}</span>

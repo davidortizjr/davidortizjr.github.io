@@ -1,5 +1,6 @@
 import {
   FileText,
+  Globe,
   Folder,
   FolderOpen,
   MessageCircle,
@@ -28,7 +29,8 @@ export type DesktopShortcut = {
 export type FinderFile = {
   id: string;
   name: string;
-  kind: "folder" | "file";
+  path: string;
+  kind: "folder" | "file" | "page";
   typeLabel: string;
   modified: string;
   size: string;
@@ -47,72 +49,32 @@ export const dockApps: DockApp[] = [
 
 export const desktopIcons: DesktopShortcut[] = [
   { id: "portfolio", label: "Portfolio_v2", icon: Folder, tone: "blue" },
-  { id: "CV", label: "CV.pdf", icon: FileText, tone: "red", previewUrl: "/Ortiz_CV.pdf" },
+  { id: "CV", label: "CV.pdf", icon: FileText, tone: "red", previewUrl: "/ORTIZ_CV.pdf" },
   { id: "archive", label: "Assets.zip", icon: Folder, tone: "violet" },
 ];
 
+const localSiteBaseUrl = "/src/data/files";
+
+const pageEntry = (
+  id: string,
+  name: string,
+  path: string,
+  previewPath: string,
+): FinderFile => ({
+  id,
+  name,
+  path,
+  kind: "page",
+  typeLabel: "Website page",
+  modified: "Live preview",
+  size: "Interactive",
+  icon: Globe,
+  previewUrl: `${localSiteBaseUrl}/${previewPath}`,
+});
+
 export const finderFiles: FinderFile[] = [
-  {
-    id: "case-studies",
-    name: "Case Studies",
-    kind: "folder",
-    typeLabel: "Folder",
-    modified: "Today, 10:42 AM",
-    size: "--",
-    icon: Folder
-  },
-  {
-    id: "GabayIsko",
-    name: "GabayIsko",
-    kind: "file",
-    typeLabel: "Sketch Document",
-    modified: "Today, 9:18 AM",
-    size: "4.8 MB",
-    icon: FileText
-  },
-  {
-    id: "TasteBuds",
-    name: "TasteBuds",
-    kind: "file",
-    typeLabel: "Sketch Document",
-    modified: "Yesterday, 6:03 PM",
-    size: "11.2 MB",
-    icon: FileText
-  },
-  {
-    id: "Valorant-API",
-    name: "Valorant API",
-    kind: "file",
-    typeLabel: "ZIP Archive",
-    modified: "Mar 29, 3:47 PM",
-    size: "186 MB",
-    icon: FileText
-  },
-  {
-    id: "spiderman",
-    name: "SPIDER-MAN: ACROSS THE SPIDER-VERSE",
-    kind: "file",
-    typeLabel: "Sketch Document",
-    modified: "Today, 11:20 AM",
-    size: "7.5 MB",
-    icon: FileText
-  },
-  {
-    id: "Lift-MNL",
-    name: "Lift MNL",
-    kind: "file",
-    typeLabel: "Sketch Document",
-    modified: "Today, 11:20 AM",
-    size: "7.5 MB",
-    icon: FileText
-  },
-  {
-    id: "MVC-Framework",
-    name: "MVC Framework",
-    kind: "file",
-    typeLabel: "Sketch Document",
-    modified: "Today, 11:20 AM",
-    size: "7.5 MB",
-    icon: FileText
-  }
+  pageEntry("a03", "LiftMNL", "src/data/files/A03", "A03/index.html"),
+  pageEntry("api", "API", "src/data/files/API", "API/index.html"),
+  pageEntry("mvc", "MVC", "src/data/files/MVC", "MVC/index.php"),
+  pageEntry("parallax", "Parallax", "src/data/files/Parallax", "Parallax/index.html"),
 ];

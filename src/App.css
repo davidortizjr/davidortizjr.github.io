@@ -654,10 +654,29 @@ body,
 }
 
 .finder-file-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  font-weight: 560;
+}
+
+.finder-file-name-main {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-weight: 560;
+  min-width: 0;
+}
+
+.finder-file-name-copy {
+  min-width: 0;
+}
+
+.finder-file-path {
+  font-size: 11px;
+  line-height: 1.2;
+  color: #6f7b96;
+  word-break: break-word;
 }
 
 .finder-file-icon-wrap {
@@ -677,6 +696,10 @@ body,
 
 .finder-file-icon.file {
   color: #6a7694;
+}
+
+.finder-file-icon.page {
+  color: #158f68;
 }
 
 .finder-icon-item {
@@ -719,6 +742,10 @@ body,
 
 .finder-icon-glyph-wrap.folder {
   background: linear-gradient(180deg, rgba(243, 250, 255, 0.96), rgba(214, 230, 255, 0.9));
+}
+
+.finder-icon-glyph-wrap.page {
+  background: linear-gradient(180deg, rgba(240, 255, 248, 0.98), rgba(215, 246, 233, 0.9));
 }
 
 .finder-icon-name {

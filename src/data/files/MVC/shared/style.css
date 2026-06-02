@@ -1,0 +1,30 @@
+.voice-chat-card {
+    width: 100%;
+    margin: 20px auto;
+    border: 1px solid #3b3b3b;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px #3b3b3b;
+    padding: 10px;
+    background-color: #000000;
+}
+
+.voice-chat-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.username {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+}
+
+.voice-chat-card-body {
+    padding: 10px;
+}
+
+.status-text {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
