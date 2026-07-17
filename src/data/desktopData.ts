@@ -72,7 +72,7 @@ const pageEntry = (
 });
 
 export const finderFiles: FinderFile[] = [
-  pageEntry("a03", "LiftMNL", `${oldPortfolioWebDevBaseUrl}/ADET/a03/index.html`),
+  pageEntry("a03", "LiftMNL", `${oldPortfolioWebDevBaseUrl}/ADET/A03/index.html`),
   pageEntry("api", "API", `${oldPortfolioWebDevBaseUrl}/webdev/API/index.html`),
   pageEntry("mvc", "MVC", `${oldPortfolioWebDevBaseUrl}/ADET/MVC/index.php`),
   pageEntry("parallax", "Parallax", `${oldPortfolioWebDevBaseUrl}/webdev/Parallax/banner.html`),
