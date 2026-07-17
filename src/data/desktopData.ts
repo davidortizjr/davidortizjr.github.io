@@ -53,28 +53,27 @@ export const desktopIcons: DesktopShortcut[] = [
   { id: "archive", label: "Assets.zip", icon: Folder, tone: "violet" },
 ];
 
-const localSiteBaseUrl = "/src/data/files";
+const oldPortfolioWebDevBaseUrl = "https://davidortizjr.github.io/old-portfolio/school/";
 
 const pageEntry = (
   id: string,
   name: string,
-  path: string,
-  previewPath: string,
+  previewUrl: string,
 ): FinderFile => ({
   id,
   name,
-  path,
+  path: name,
   kind: "page",
   typeLabel: "Website page",
   modified: "Live preview",
   size: "Interactive",
   icon: Globe,
-  previewUrl: `${localSiteBaseUrl}/${previewPath}`,
+  previewUrl,
 });
 
 export const finderFiles: FinderFile[] = [
-  pageEntry("a03", "LiftMNL", "src/data/files/A03", "A03/index.html"),
-  pageEntry("api", "API", "src/data/files/API", "API/index.html"),
-  pageEntry("mvc", "MVC", "src/data/files/MVC", "MVC/index.php"),
-  pageEntry("parallax", "Parallax", "src/data/files/Parallax", "Parallax/index.html"),
+  pageEntry("a03", "LiftMNL", `${oldPortfolioWebDevBaseUrl}/ADET/a03/index.html`),
+  pageEntry("api", "API", `${oldPortfolioWebDevBaseUrl}/webdev/API/index.html`),
+  pageEntry("mvc", "MVC", `${oldPortfolioWebDevBaseUrl}/ADET/MVC/index.php`),
+  pageEntry("parallax", "Parallax", `${oldPortfolioWebDevBaseUrl}/webdev/Parallax/banner.html`),
 ];

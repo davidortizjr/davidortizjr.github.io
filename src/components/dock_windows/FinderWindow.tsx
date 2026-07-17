@@ -421,7 +421,7 @@ const FinderWindow = ({ isOpen, origin, onClose, onMinimize, onClosed, onOpenFil
             <div className="finder-drag-area" onPointerDown={handleWindowPointerDown} aria-hidden="true" />
             <div>
               <h1>Web Pages</h1>
-              <p>Live previews for the sites in data/files</p>
+              <p>Live previews for the published portfolio sites</p>
             </div>
             <div className="finder-header-actions">
               <button type="button" className="header-icon-btn" aria-label="Search pages">
