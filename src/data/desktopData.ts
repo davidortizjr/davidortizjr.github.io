@@ -49,7 +49,15 @@ export const dockApps: DockApp[] = [
 
 export const desktopIcons: DesktopShortcut[] = [
   { id: "portfolio", label: "Portfolio_v2", icon: Folder, tone: "blue" },
-  { id: "CV", label: "CV.pdf", icon: FileText, tone: "red", previewUrl: `${import.meta.env.BASE_URL}ORTIZ_CV.pdf` },
+  {
+    id: "CV",
+    label: "CV.pdf",
+    icon: FileText,
+    tone: "red",
+    previewUrl: import.meta.env.PROD
+      ? "https://davidortizjr.github.io/macOS-Portfolio/ORTIZ_CV.pdf"
+      : `${import.meta.env.BASE_URL}ORTIZ_CV.pdf`,
+  },
   { id: "archive", label: "Assets.zip", icon: Folder, tone: "violet" },
 ];
 
