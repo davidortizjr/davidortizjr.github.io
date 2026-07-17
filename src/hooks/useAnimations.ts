@@ -133,6 +133,8 @@ export const useTextLetterAnimation = (
         let frameId: number | null = null;
         let pendingMouseX = 0;
         let letterCenters: number[] = [];
+        // Keep last applied weights to avoid redundant GSAP calls
+        const lastWeights: number[] = Array.from({ length: letters.length }).map(() => -1);
         let containerLeft = 0;
 
         const recalculateMetrics = () => {
@@ -171,13 +173,34 @@ export const useTextLetterAnimation = (
             frameId = window.requestAnimationFrame(() => {
                 frameId = null;
 
-                letters.forEach((letter, index) => {
+                // Only animate a small window of letters near the cursor to reduce work
+                // Find nearest letter index
+                let nearestIndex = 0;
+                let nearestDist = Infinity;
+                for (let i = 0; i < letterCenters.length; i++) {
+                    const d = Math.abs(pendingMouseX - letterCenters[i]);
+                    if (d < nearestDist) {
+                        nearestDist = d;
+                        nearestIndex = i;
+                    }
+                }
+
+                const WINDOW = 6; // number of letters on each side to consider
+                const start = Math.max(0, nearestIndex - WINDOW);
+                const end = Math.min(letters.length - 1, nearestIndex + WINDOW);
+
+                for (let index = start; index <= end; index++) {
+                    const letter = letters[index];
                     const distance = Math.abs(pendingMouseX - letterCenters[index]);
                     const intensity = Math.exp(-(distance ** 2) / TEXT_ANIMATION_CONFIG.INTENSITY_DIVISOR);
                     const weight = Math.round(min + (max - min) * intensity);
 
-                    animateLetter(letter, weight);
-                });
+                    // Only animate if weight changed significantly to avoid repeated calls
+                    if (Math.abs(lastWeights[index] - weight) >= 2) {
+                        lastWeights[index] = weight;
+                        animateLetter(letter, weight);
+                    }
+                }
             });
         };
 

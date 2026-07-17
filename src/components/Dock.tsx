@@ -44,7 +44,7 @@ const Dock = ({ activeAppId, onToggleApp, onPrefetchApp }: DockProps) => {
           aria-label="GitHub profile"
         >
           <span className="dock-icon-surface dock-icon-surface-github">
-            <img className="dock-icon-glyph" src={logoGithub} alt="" aria-hidden="true" />
+            <img className="dock-icon-glyph" src={logoGithub} alt="" aria-hidden="true" loading="lazy" />
           </span>
           <span className="dock-tooltip">GitHub</span>
         </a>
@@ -56,7 +56,7 @@ const Dock = ({ activeAppId, onToggleApp, onPrefetchApp }: DockProps) => {
           aria-label="LinkedIn profile"
         >
           <span className="dock-icon-surface dock-icon-surface-linkedin">
-            <img className="dock-icon-glyph" src={logoLinkedin} alt="" aria-hidden="true" />
+            <img className="dock-icon-glyph" src={logoLinkedin} alt="" aria-hidden="true" loading="lazy" />
           </span>
           <span className="dock-tooltip">LinkedIn</span>
         </a>

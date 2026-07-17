@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <script>
+        // When GitHub Pages returns this 404, fetch the app's index.html
+        // and replace the document so the SPA can handle the route.
+        fetch('./index.html')
+            .then(function (res) { return res.text(); })
+            .then(function (html) {
+                document.open();
+                document.write(html);
+                document.close();
+            })
+            .catch(function () {
+                // Fallback: go to root
+                location.replace('./');
+            });
+    </script>
+</head>
+
+<body></body>
+
+</html>

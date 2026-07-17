@@ -1,4 +1,5 @@
 import { desktopIcons } from "../data/desktopData";
+import { memo } from "react";
 
 type ViewerFile = {
   id: string;
@@ -50,4 +51,4 @@ const DesktopShortcuts = ({ onOpenFile }: DesktopShortcutsProps) => {
   );
 };
 
-export default DesktopShortcuts;
+export default memo(DesktopShortcuts);
