@@ -54,9 +54,7 @@ export const desktopIcons: DesktopShortcut[] = [
     label: "CV.pdf",
     icon: FileText,
     tone: "red",
-    previewUrl: import.meta.env.PROD
-      ? "https://raw.githubusercontent.com/davidortizjr/macOS-Portfolio/main/public/ORTIZ_CV.pdf"
-      : `${import.meta.env.BASE_URL}ORTIZ_CV.pdf`,
+    previewUrl: `${import.meta.env.BASE_URL}ORTIZ_CV.pdf`,
   },
   { id: "archive", label: "Assets.zip", icon: Folder, tone: "violet" },
 ];
