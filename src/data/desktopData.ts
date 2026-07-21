@@ -82,4 +82,9 @@ export const finderFiles: FinderFile[] = [
   pageEntry("api", "API", `${oldPortfolioWebDevBaseUrl}/webdev/API/index.html`),
   pageEntry("mvc", "MVC", `${oldPortfolioWebDevBaseUrl}/ADET/A02/index.php`),
   pageEntry("parallax", "Parallax", `${oldPortfolioWebDevBaseUrl}/webdev/Parallax/banner.html`),
+  pageEntry("gentry", "Gentry", "https://gentry-timepieces.vercel.app/"),
+  pageEntry("ironforge", "Ironforge", "https://iron-forge-nine.vercel.app/"),
+  pageEntry("boardbrew", "Boardbrew", "https://boardbrew.vercel.app/"),
+  pageEntry("dwenas", "Dwenas", "https://dwenas.vercel.app/"),
+  pageEntry("curator", "Curator", "https://curator-alpha.vercel.app/"),
 ];
