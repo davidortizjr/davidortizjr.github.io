@@ -267,7 +267,7 @@ body,
   z-index: 25;
   width: min(100vw - 44px, 980px);
   height: min(74vh, 620px);
-  transform: translate(-50%, -50%);
+  will-change: transform;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
@@ -278,21 +278,21 @@ body,
   height: min(calc(100vh - var(--menu-height) - 24px), 760px);
 }
 
-.finder-shell.snap-bounce {
+.finder-shell.snap-bounce .finder-window {
   animation: finderSnapBounce 180ms ease-out;
 }
 
 @keyframes finderSnapBounce {
   0% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(1);
   }
 
   55% {
-    transform: translate(-50%, -50%) scale(1.01);
+    transform: scale(1.01);
   }
 
   100% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: scale(1);
   }
 }
 
@@ -300,6 +300,10 @@ body,
 .finder-shell.is-dragging .finder-window,
 .finder-shell.is-dragging .finder-header {
   cursor: grabbing;
+}
+
+.finder-shell.is-dragging .finder-window {
+  backdrop-filter: blur(10px) saturate(115%);
 }
 
 .finder-header {
@@ -763,7 +767,7 @@ body,
   z-index: 25;
   width: min(100vw - 44px, 700px);
   height: min(70vh, 580px);
-  transform: translate(-50%, -50%);
+  will-change: transform;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
@@ -777,6 +781,10 @@ body,
 .about-shell.is-dragging,
 .about-shell.is-dragging .about-window {
   cursor: grabbing;
+}
+
+.about-shell.is-dragging .about-window {
+  backdrop-filter: blur(10px) saturate(115%);
 }
 
 .about-shell.is-closing {
@@ -915,7 +923,7 @@ body,
   z-index: 25;
   width: min(100vw - 44px, 640px);
   height: min(66vh, 520px);
-  transform: translate(-50%, -50%);
+  will-change: transform;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
@@ -934,6 +942,10 @@ body,
 .contact-shell.is-dragging,
 .contact-shell.is-dragging .contact-window {
   cursor: grabbing;
+}
+
+.contact-shell.is-dragging .contact-window {
+  backdrop-filter: blur(10px) saturate(115%);
 }
 
 .contact-shell.is-closing {

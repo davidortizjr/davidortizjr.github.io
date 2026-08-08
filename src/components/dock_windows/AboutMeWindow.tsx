@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from "react";
-import type { PointerEvent as ReactPointerEvent } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Code2, Zap, Palette, Users } from "lucide-react";
+import { useDraggableWindow } from "../../hooks/useDraggableWindow";
 
 type AboutMeWindowProps = {
     isOpen: boolean;
@@ -14,29 +14,15 @@ type AboutMeWindowProps = {
 
 const AboutMeWindow = ({ isOpen, origin, onClose, onMinimize, onClosed }: AboutMeWindowProps) => {
     const aboutRef = useRef<HTMLElement>(null);
-    const shellRef = useRef<HTMLDivElement>(null);
     const originRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
     const restorePositionRef = useRef<{ x: number; y: number } | null>(null);
     const hasOpenedOnceRef = useRef(false);
-    const dragStateRef = useRef<{
-        isDragging: boolean;
-        offsetX: number;
-        offsetY: number;
-    }>({ isDragging: false, offsetX: 0, offsetY: 0 });
-
-    const [shellPosition, setShellPosition] = useState<{ x: number; y: number }>(() => {
-        if (typeof window === "undefined") {
-            return { x: 0, y: 0 };
-        }
-        return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const { shellRef, shellPosition, setShellPosition, handleWindowPointerDown } = useDraggableWindow({
+        isOpen,
+        blockDragSelector: "button",
+        topBarHeight: 44,
     });
     const [isZoomed, setIsZoomed] = useState(false);
-
-    useEffect(() => {
-        if (!isOpen) {
-            setIsZoomed(false);
-        }
-    }, [isOpen]);
 
     // Update origin ref immediately when origin prop changes
     useEffect(() => {
@@ -44,32 +30,6 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onMinimize, onClosed }: AboutM
             originRef.current = origin;
         }
     }, [origin]);
-
-    const handleWindowPointerDown = (event: ReactPointerEvent<HTMLElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.closest("button")) {
-            return;
-        }
-
-        const windowElement = event.currentTarget;
-        const windowRect = windowElement.getBoundingClientRect();
-        const isInTopBar = event.clientY - windowRect.top <= 44;
-
-        if (!isInTopBar) {
-            return;
-        }
-
-        const shell = shellRef.current;
-        if (!shell) {
-            return;
-        }
-
-        dragStateRef.current.isDragging = true;
-        dragStateRef.current.offsetX = event.clientX - shellPosition.x;
-        dragStateRef.current.offsetY = event.clientY - shellPosition.y;
-        shell.classList.add("is-dragging");
-        windowElement.setPointerCapture(event.pointerId);
-    };
 
     const handleMinimize = () => {
         setIsZoomed(false);
@@ -94,55 +54,6 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onMinimize, onClosed }: AboutM
             return next;
         });
     };
-
-    // Handle dragging with proper cleanup
-    useEffect(() => {
-        if (!isOpen) {
-            return;
-        }
-
-        const handlePointerMove = (event: PointerEvent) => {
-            const dragState = dragStateRef.current;
-            if (!dragState.isDragging) {
-                return;
-            }
-
-            const shell = shellRef.current;
-            if (!shell) {
-                return;
-            }
-
-            const shellWidth = shell.offsetWidth;
-            const shellHeight = shell.offsetHeight;
-            const minX = shellWidth / 2;
-            const maxX = window.innerWidth - shellWidth / 2;
-            const minY = shellHeight / 2;
-            const maxY = window.innerHeight - shellHeight / 2;
-
-            const rawX = event.clientX - dragState.offsetX;
-            const rawY = event.clientY - dragState.offsetY;
-            const nextX = Math.min(Math.max(rawX, minX), maxX);
-            const nextY = Math.min(Math.max(rawY, minY), maxY);
-
-            setShellPosition({ x: nextX, y: nextY });
-        };
-
-        const handlePointerUp = () => {
-            dragStateRef.current.isDragging = false;
-            const shell = shellRef.current;
-            if (shell) {
-                shell.classList.remove("is-dragging");
-            }
-        };
-
-        window.addEventListener("pointermove", handlePointerMove);
-        window.addEventListener("pointerup", handlePointerUp);
-
-        return () => {
-            window.removeEventListener("pointermove", handlePointerMove);
-            window.removeEventListener("pointerup", handlePointerUp);
-        };
-    }, [isOpen]);
 
     // Handle opening and closing animations
     useGSAP(
@@ -242,7 +153,7 @@ const AboutMeWindow = ({ isOpen, origin, onClose, onMinimize, onClosed }: AboutM
         <div
             className={`about-shell${isOpen ? " is-open" : " is-closing"}${isZoomed ? " is-zoomed" : ""}`}
             ref={shellRef}
-            style={{ left: `${shellPosition.x}px`, top: `${shellPosition.y}px` }}
+            style={{ transform: `translate3d(${shellPosition.x}px, ${shellPosition.y}px, 0) translate(-50%, -50%)` }}
             aria-label="About Me window"
         >
             <section className="about-window" ref={aboutRef}>

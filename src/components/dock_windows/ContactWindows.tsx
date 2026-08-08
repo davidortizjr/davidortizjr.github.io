@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import type { PointerEvent as ReactPointerEvent } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Code2, Link2, Mail, MessageCircle } from "lucide-react";
+import { useDraggableWindow } from "../../hooks/useDraggableWindow";
 
 type ContactWindowsProps = {
     isOpen: boolean;
@@ -38,109 +38,21 @@ const contactLinks = [
 
 const ContactWindows = ({ isOpen, origin, onClose, onMinimize, onClosed }: ContactWindowsProps) => {
     const contactRef = useRef<HTMLElement>(null);
-    const shellRef = useRef<HTMLDivElement>(null);
     const originRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
     const restorePositionRef = useRef<{ x: number; y: number } | null>(null);
     const hasOpenedOnceRef = useRef(false);
-    const dragStateRef = useRef<{
-        isDragging: boolean;
-        offsetX: number;
-        offsetY: number;
-    }>({ isDragging: false, offsetX: 0, offsetY: 0 });
-    const [shellPosition, setShellPosition] = useState<{ x: number; y: number }>(() => {
-        if (typeof window === "undefined") {
-            return { x: 0, y: 0 };
-        }
-
-        return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const { shellRef, shellPosition, setShellPosition, handleWindowPointerDown } = useDraggableWindow({
+        isOpen,
+        blockDragSelector: "button,a",
+        topBarHeight: 44,
     });
     const [isZoomed, setIsZoomed] = useState(false);
-
-    useEffect(() => {
-        if (!isOpen) {
-            setIsZoomed(false);
-        }
-    }, [isOpen]);
 
     useEffect(() => {
         if (origin) {
             originRef.current = origin;
         }
     }, [origin]);
-
-    useEffect(() => {
-        if (!isOpen) {
-            return;
-        }
-
-        const handlePointerMove = (event: PointerEvent) => {
-            const dragState = dragStateRef.current;
-            if (!dragState.isDragging) {
-                return;
-            }
-
-            const shell = shellRef.current;
-            if (!shell) {
-                return;
-            }
-
-            const shellWidth = shell.offsetWidth;
-            const shellHeight = shell.offsetHeight;
-            const minX = shellWidth / 2;
-            const maxX = window.innerWidth - shellWidth / 2;
-            const minY = shellHeight / 2;
-            const maxY = window.innerHeight - shellHeight / 2;
-
-            const rawX = event.clientX - dragState.offsetX;
-            const rawY = event.clientY - dragState.offsetY;
-            const nextX = Math.min(Math.max(rawX, minX), maxX);
-            const nextY = Math.min(Math.max(rawY, minY), maxY);
-
-            setShellPosition({ x: nextX, y: nextY });
-        };
-
-        const handlePointerUp = () => {
-            dragStateRef.current.isDragging = false;
-            const shell = shellRef.current;
-            if (shell) {
-                shell.classList.remove("is-dragging");
-            }
-        };
-
-        window.addEventListener("pointermove", handlePointerMove);
-        window.addEventListener("pointerup", handlePointerUp);
-
-        return () => {
-            window.removeEventListener("pointermove", handlePointerMove);
-            window.removeEventListener("pointerup", handlePointerUp);
-        };
-    }, [isOpen]);
-
-    const handleWindowPointerDown = (event: ReactPointerEvent<HTMLElement>) => {
-        const target = event.target as HTMLElement;
-        if (target.closest("button") || target.closest("a")) {
-            return;
-        }
-
-        const windowElement = event.currentTarget;
-        const windowRect = windowElement.getBoundingClientRect();
-        const isInTopBar = event.clientY - windowRect.top <= 44;
-
-        if (!isInTopBar) {
-            return;
-        }
-
-        const shell = shellRef.current;
-        if (!shell) {
-            return;
-        }
-
-        dragStateRef.current.isDragging = true;
-        dragStateRef.current.offsetX = event.clientX - shellPosition.x;
-        dragStateRef.current.offsetY = event.clientY - shellPosition.y;
-        shell.classList.add("is-dragging");
-        windowElement.setPointerCapture(event.pointerId);
-    };
 
     const handleMinimize = () => {
         setIsZoomed(false);
@@ -275,7 +187,7 @@ const ContactWindows = ({ isOpen, origin, onClose, onMinimize, onClosed }: Conta
         <div
             className={`contact-shell${isOpen ? " is-open" : " is-closing"}${isZoomed ? " is-zoomed" : ""}`}
             ref={shellRef}
-            style={{ left: `${shellPosition.x}px`, top: `${shellPosition.y}px` }}
+            style={{ transform: `translate3d(${shellPosition.x}px, ${shellPosition.y}px, 0) translate(-50%, -50%)` }}
             aria-label="Contact window"
         >
             <section className="contact-window" ref={contactRef}>
